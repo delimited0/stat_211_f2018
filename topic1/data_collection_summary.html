@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Data collection and summarization</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Patrick Ding" />
+    <link href="data_collection_summary_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="data_collection_summary_files/remark-css-0.0.1/tamu.css" rel="stylesheet" />
+    <link href="data_collection_summary_files/remark-css-0.0.1/tamu-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Data collection and summarization
+### Patrick Ding
+### 8/28/2018
+
+---
+
+
+
+
+# Topic Overview
+
+- Populations and samples
+- Frequency distributions
+- Histograms 
+- Mean, median, variance and standard deviation
+- Quartiles, interquartile range 
+- Boxplots
+
+---
+
+# What is Statistics?
+
+- Statistics: the science of collecting, classifying, and interpreting data.
+
+- Anticipated learning outcomes:
+    - appreciate and apply basic statistical methods in an everyday life setting
+    - appreciate and apply basic statistical methods in their scientific field
+
+---
+
+# Where will Statistics be used?
+
+- Everyday life
+    - Proper application of general probabilities
+    - How election results are presented
+    - Commercial claims (clinical trials vs. outliers)
+    
+- Industry applications
+    - Google web searches
+    - Netflix user recommendations
+    - Pharmaceutical drug development
+    - Sports analytics
+    - Modeling global climate change
+    - Credit card fraud detection
+    - Biomarkers and disease detection
+    - Criminal justice
+
+---
+
+# Collecting data
+
+- **Observational study**: Observe a group and measure quantities of interest.  This is passive data collection in that one does not attempt to influence the group.  The purpose of the study is to describe the group. 
+
+- **Experiment**: Deliberately impose treatments on groups in order to observe responses.  The purpose is to study whether the treatments cause a change in the responses.
+
+---
+
+# Observational Study
+
+## Definitions
+
+1. **Population**: The entire group of interest
+
+2. **Sample**: A part of the population selected to draw conclusions about the entire population
+
+3. **Census**: A sample that attempts to include the entire population
+
+4. **Parameter**: A concept that describes the population
+
+5. **Statistic**: A number produced from a sample that estimates a population parameter 
+
+---
+
+# Experiment
+
+1. **Experimental Group**: A collection of experimental units subjected to a difference in treatment, imposed by the experimenter.
+
+2. **Control Group**: A collection of experimental units subjected to the same conditions as those in an experimental group except that no treatment is imposed.
+
+This design helps control for potential confounding effects.
+
+---
+
+# Cereal Data
+
+![US cereal data](UScereal.png)
+
+---
+
+# Summarizing single categorical variable
+
+- **Frequency** - number of times the value occurs in the data
+- **Relative frequency** - proportion of the data with the value
+
+---
+
+# Summarizing single categorical variable
+
+
+```
+## mfr
+##  G  K  N  P  Q  R 
+## 22 21  3  9  5  5 
+## mfr
+##          G          K          N          P          Q          R 
+## 0.33846154 0.32307692 0.04615385 0.13846154 0.07692308 0.07692308
+```
+
+&lt;img src="data_collection_summary_files/figure-html/unnamed-chunk-1-1.png" width="480" /&gt;
+
+---
+
+# R script for histograms of state data
+
+
+```r
+summary(USArrests)
+```
+
+```
+##      Murder          Assault         UrbanPop          Rape      
+##  Min.   : 0.800   Min.   : 45.0   Min.   :32.00   Min.   : 7.30  
+##  1st Qu.: 4.075   1st Qu.:109.0   1st Qu.:54.50   1st Qu.:15.07  
+##  Median : 7.250   Median :159.0   Median :66.00   Median :20.10  
+##  Mean   : 7.788   Mean   :170.8   Mean   :65.54   Mean   :21.23  
+##  3rd Qu.:11.250   3rd Qu.:249.0   3rd Qu.:77.75   3rd Qu.:26.18  
+##  Max.   :17.400   Max.   :337.0   Max.   :91.00   Max.   :46.00
+```
+
+```r
+par(mfrow = c(1, 2))
+hist(USArrests$Murder, main = "Murder")
+hist(USArrests$UrbanPop, main = "Urban Population")
+```
+
+&lt;img src="data_collection_summary_files/figure-html/unnamed-chunk-2-1.png" width="480" /&gt;
+
+# Summary statistics for quantitative data
+
+## Measures of central tendency
+
+- The **sample median** is the middle observation if the values are arranged in increasing order.  
+
+- The **sample mean** of n observations is the average, the sum of the values divided by n:
+
+`\begin{align}
+\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i
+\end{align}`
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,138 @@
+---
+title: "Data collection and summarization"
+author: "Patrick Ding"
+date: "8/28/2018"
+output: 
+  tufte::tufte_handout: default
+  # xaringan::moon_reader:
+  #   css: [default, tamu, tamu-fonts]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+doc_type <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+```
+
+# Topic Overview
+
+- Populations and samples
+- Frequency distributions
+- Histograms 
+- Mean, median, variance and standard deviation
+- Quartiles, interquartile range 
+- Boxplots
+
+`r if (doc_type == "html") {"---"}`
+
+# What is Statistics?
+
+- Statistics: the science of collecting, classifying, and interpreting data.
+
+- Anticipated learning outcomes:
+    - appreciate and apply basic statistical methods in an everyday life setting
+    - appreciate and apply basic statistical methods in their scientific field
+
+`r if (doc_type == "html") {"---"}`
+
+# Where will Statistics be used?
+
+- Everyday life
+    - Proper application of general probabilities
+    - How election results are presented
+    - Commercial claims (clinical trials vs. outliers)
+    
+- Industry applications
+    - Google web searches
+    - Netflix user recommendations
+    - Pharmaceutical drug development
+    - Sports analytics
+    - Modeling global climate change
+    - Credit card fraud detection
+    - Biomarkers and disease detection
+    - Criminal justice
+
+`r if (doc_type == "html") {"---"}`
+
+# Collecting data
+
+- **Observational study**: Observe a group and measure quantities of interest.  This is passive data collection in that one does not attempt to influence the group.  The purpose of the study is to describe the group. 
+
+- **Experiment**: Deliberately impose treatments on groups in order to observe responses.  The purpose is to study whether the treatments cause a change in the responses.
+
+`r if (doc_type == "html") {"---"}`
+
+# Observational Study
+
+## Definitions
+
+1. **Population**: The entire group of interest
+
+2. **Sample**: A part of the population selected to draw conclusions about the entire population
+
+3. **Census**: A sample that attempts to include the entire population
+
+4. **Parameter**: A concept that describes the population
+
+5. **Statistic**: A number produced from a sample that estimates a population parameter 
+
+`r if (doc_type == "html") {"---"}`
+
+# Experiment
+
+1. **Experimental Group**: A collection of experimental units subjected to a difference in treatment, imposed by the experimenter.
+
+2. **Control Group**: A collection of experimental units subjected to the same conditions as those in an experimental group except that no treatment is imposed.
+
+This design helps control for potential confounding effects.
+
+`r if (doc_type == "html") {"---"}`
+
+# Cereal Data
+
+![US cereal data](UScereal.png)
+
+`r if (doc_type == "html") {"---"}`
+
+# Summarizing single categorical variable
+
+- **Frequency** - number of times the value occurs in the data
+- **Relative frequency** - proportion of the data with the value
+
+`r if (doc_type == "html") {"---"}`
+
+# Summarizing single categorical variable
+
+```{r echo=FALSE, fig.height=3, fig.width=5}
+cereal <- MASS::UScereal
+with(cereal, {
+  mfr_table <- table(mfr)
+  mfr_freq <- mfr_table / sum(mfr_table)
+  print(mfr_table)
+  print(mfr_freq)
+  barplot(mfr_table, xlab = "mfr", ylab = "Frequency")
+})
+```
+
+`r if (doc_type == "html") {"---"}`
+
+# R script for histograms of state data
+
+```{r fig.height=3, fig.width=5}
+summary(USArrests)
+par(mfrow = c(1, 2))
+hist(USArrests$Murder, main = "Murder")
+hist(USArrests$UrbanPop, main = "Urban Population")
+```
+
+# Summary statistics for quantitative data
+
+## Measures of central tendency
+
+- The **sample median** is the middle observation if the values are arranged in increasing order.  
+
+- The **sample mean** of n observations is the average, the sum of the values divided by n:
+
+\begin{align}
+\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i
+\end{align}
+
