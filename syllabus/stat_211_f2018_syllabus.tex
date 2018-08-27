@@ -86,7 +86,7 @@ Fall 2018
 \\\\
 \textbf{TA:} & Junsouk Choi & & & & \textbf{Email:} & \url{jchoi@stat.tamu.edu}
 \\
-\textbf{Office hours:} &    & & & & \textbf{Office:} & 
+\textbf{Office hours:} & Wed 10:00am - 12:00pm   & & & & \textbf{Office:} & Blocker 420 
 \end{tabular}
 \end{minipage}
 \rule{\textwidth}{0.4pt}
@@ -123,7 +123,14 @@ the semester, for those taking MATH 172 concurrently.
 
 \vskip.15in
 \noindent\textbf{Learning Outcomes:}
-Ability to summarize data graphically and numerically, quantify uncertainty in estimates, and use statistics to make decisions in real world problems. Should gain the necessary background for STAT 212: Principles of Statistics II.
+\begin{enumerate}
+  \item Identify appropriate graphs, summary statistics, and inferential statistics for real-world contexts.
+ \item Interpret graphs and statistics in real-world contexts.
+ \item Calculate summary and inferential statistics.
+ \item Infer appropriate conclusions about populations based on data.
+ \item Explain and compare properties of summary and inferential statistics.
+ \item Combine concepts in new ways to solve various problems.
+\end{enumerate}
 
 \vspace*{.15in}
 \noindent \textbf{Course Outline:}
@@ -134,33 +141,33 @@ Ability to summarize data graphically and numerically, quantify uncertainty in e
 \bf Week & \bf Date & \bf Topic & \bf Homework 
 \\
 \midrule
-1    & Aug 28, Aug 30  & Data collection and summarization & 
+1    & Aug 28, Aug 30  & Introduction and R tutorial & 
 \\
-2    & Sep 4, Sep 6 & Probability  & HW 1 due Sep 7
+2    & Sep 4, Sep 6 & Probability and random variables & HW 1 due Sep 7
 \\
-3    & Sep 11, Sep 13 & Discrete distributions
+3    & Sep 11, Sep 13 & Introduction to statistical inference
 \\
-4    & Sep 18, Sep 20 & Continuous distributions & HW 2 due Sep 17
+4    & Sep 18, Sep 20 & Expectation & HW 2 due Sep 17
 \\
-5    & Sep 25, Sep 27 & Joint distributions & HW 3 due Sep 26
+5    & Sep 25, Sep 27 & Conditional probability and Bayes' theorem & HW 3 due Sep 26
 \\
 6    & Oct 2, Oct 4 & Review, exam 1 during class & HW 4 due Oct 3
 \\
-7    & Oct 9, Oct 11 & Central Limit Theorem
+7    & Oct 9, Oct 11 & Statistical inference with simulation
 \\
-8    & Oct 16, Oct 18 & Confidence interval based on single sample & HW 5 due Oct 15
+8    & Oct 16, Oct 18 & Bayesian inference & HW 5 due Oct 15
 \\
-9    & Oct 23, Oct 25 & Hypothesis test based on single sample & HW 6 due Oct 22
+9    & Oct 23, Oct 25 & Continuous random variables & HW 6 due Oct 22
 \\
-10   & Oct 30, Nov 1 & Comparing two samples  & HW 7 due Oct 29
+10   & Oct 30, Nov 1 & Classical inference  & HW 7 due Oct 29
 \\
 11   & Nov 6, Nov 8 & Review, exam 2 during class
 \\
-12   & Nov 13, Nov 15 & Analysis of Variance & HW 8 due Nov 14
+12   & Nov 13, Nov 15 & Linear regression & HW 8 due Nov 14
 \\
-13   & Nov 20   & Linear regression & HW 9 due Nov 21
+13   & Nov 20   & Analysis of variance & HW 9 due Nov 21
 \\
-14   & Nov 27, Nov 29 & Linear regression
+14   & Nov 27, Nov 29 & Data production
 \\
 15   & Dec 4    & Review & HW 10 due Dec 3
 \\
@@ -186,12 +193,10 @@ Ability to summarize data graphically and numerically, quantify uncertainty in e
 \section{Course Resources}
 
 \noindent\textbf{Main References:} %\footnotemark
-\textit{OpenIntro Statistics} is available as a free pdf online, see the link.
-
-\begin{itemize}
-    \item \textit{OpenIntro Statistics}, David M Diez, Christopher D Barr, and Mine Cetinkaya-Rundel. \url{https://www.openintro.org/stat/textbook.php?stat_book=os}
-    \item \textit{Probability and Statistics with R for Engineers \& Scientists}, Michael Akritas, Pearson. ISBN 9780321852991 
-\end{itemize}
+There is no required textbook. You will be provided with lecture notes and other materials that will be
+sufficient to support this course. An optional book to consider is \textit{Mathematical Statistics with Resampling and
+R} by Chihara and Hesterberg; an electronic version of this book is available on the TAMU library website. A good beginner's resource for R is \textit{The
+R Cookbook} by Paul Teetor; an electronic version of this book is available on the TAMU library website.
 
 
 \vskip.15in
@@ -205,10 +210,13 @@ Ability to summarize data graphically and numerically, quantify uncertainty in e
 \vskip.15in
 \noindent\textbf{Software:} We will use the R programming language, available for download here: \href{https://www.r-project.org/}{https://www.r-project.org/}. I recommend you use Rstudio as your development environment: \href{https://www.rstudio.com/products/rstudio/download/}{https://www.rstudio.com}. 
 
+\vskip.15in
+\noindent\textbf{Help Sessions:} On Mondays through Thursdays at Blocker 162 you can get help on the course from STAT grad students. See the first page for times.
+
 \section{Grading}
 
 \noindent\textbf{Grading Policy:} 
-Homework (15\%),  Midterm 1 (25\%), Midterm 2 (25\%), Final (35\%). 
+Homework (30\%),  Midterm 1 (20\%), Midterm 2 (20\%), Final (30\%). 
 \\
 Grade cutoffs:
 %
@@ -220,9 +228,9 @@ For grades within 1\% of a higher grade I reserve the right to bump your grade u
 
 \vskip.15in
 \noindent\textbf{Homework:}
-Will be assigned weekly, posted and submitted via Webassign ( \url{https://www.webassign.net/
-tamu/login.html} ). The cost of Webassign is ?\$22.
-All homeworks are due at 8:00 am. Check the course outline for due dates. \textbf{Late homework will never be accepted}, but the lowest homework score will be dropped.
+Homework is posted and submitted via Webassign ( \url{https://www.webassign.net/
+tamu/login.html} ). The cost of Webassign is \$22 and can be accessed and purchased by going to the eCampus site for this course and clicking on the link for Webassign on the left side.
+All homeworks are due at 8:00 am. Check the course outline for due dates. \textbf{Late homework will never be accepted}, but the lowest homework score will be dropped. You are encouraged to work together, but the answers must be your own.
 
 \vskip.15in
 \noindent\textbf{Exams:}
@@ -230,8 +238,8 @@ If you know you will miss the exam for a valid reason, please notify me or the m
 of Statistics as soon as possible. For what constitutes a university excused absence, see \url{http://student-rules.tamu.edu/rule07}. All exams will be held in Blocker 150.
 \begin{center} \begin{minipage}{3.8in}
 \begin{flushleft}
-Exam \#1      \dotfill Oct 4  \\
-Exam \#2      \dotfill Nov 8  \\
+Midterm \#1      \dotfill Oct 4  \\
+Midterm \#2      \dotfill Nov 8  \\
 %Project Deadline \dotfill ~Month Day \\
 Final Exam       \dotfill Dec 12  \\
 \end{flushleft}

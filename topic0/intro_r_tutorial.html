@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Topic 0: Introduction and R tutorial</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Patrick Ding" />
+    <link href="intro_r_tutorial_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="intro_r_tutorial_files/remark-css-0.0.1/tamu.css" rel="stylesheet" />
+    <link href="intro_r_tutorial_files/remark-css-0.0.1/tamu-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Topic 0: Introduction and R tutorial
+### Patrick Ding
+### 8/28/2018
+
+---
+
+
+
+
+# Administrative
+
+1. Get webassign
+
+2. Accept Piazza invite
+
+3. Read syllabus 
+
+4. Download R and Rstudio
+
+---
+
+# What is Statistics?
+
+- Statistics: the science of learning from data.
+
+- Anticipated learning outcomes:
+    - appreciate and apply basic statistical methods in an everyday life setting
+    - appreciate and apply basic statistical methods in their scientific field
+
+---
+
+# Why should you care
+
+.center[
+&lt;img src="intro_r_tutorial_files/figure-html/unnamed-chunk-1-1.png" width="672" /&gt;
+]
+
+---
+
+- Computer science/software engineering
+    - A/B Testing
+    - Recommendation
+    
+- Civil engineering
+    - Traffic management
+    - Risk and reliability
+    
+- Industrial engineering
+    - Statistical process control
+    - Queuing theory
+    
+- Mechanical engineering
+    - Optimal control 
+    
+---
+    
+- Biology
+    - Genome-wide association study
+    - Phylogeny
+    
+- Meteorology
+    - Model output statistics
+    - Ensemble forecasts
+    
+- Economics
+    - Causal inference
+    - Factor investing
+    
+- Chemistry
+    - Multivariate calibration
+
+---
+
+- Humanities
+    - Topic modeling
+    - "Distant reading"
+
+- Psychology
+    - Personality testing
+    - Experimental design
+
+- Marketing
+    - Market basket analysis
+
+---
+
+# Motivating example
+
+In the 2015 season of the National Football League (NFL), the Houston Texans won 9 of their 16 games.
+
+- Win percentage: (9 / 16) x 100% = 56.25%.
+
+- Is "real" win percentage better than chance (50%)?
+
+- What is the probability of 9 or more wins out of 16 if real win percentage is 50%?
+
+---
+
+Simulate result of a season
+
+
+```r
+p &lt;- 0.5
+season &lt;- sample(c(0, 1), size = 16, replace = TRUE, prob = c(1 - p, p))
+win_total &lt;- sum(season)
+season
+```
+
+```
+##  [1] 1 1 0 0 1 0 0 0 0 1 1 1 0 1 0 1
+```
+
+```r
+win_total
+```
+
+```
+## [1] 8
+```
+
+---
+
+Run simulation 1000 times
+
+
+```r
+n &lt;- 1000
+win_total &lt;- replicate(n, {
+  season &lt;- sample(c(0, 1), size = 16, replace = TRUE, prob = c(1 - p, p))
+  sum(season)
+})
+```
+
+Frequencies of win totals:
+
+
+```r
+table(win_total)
+```
+
+```
+## win_total
+##   2   3   4   5   6   7   8   9  10  11  12  13  14 
+##   4  12  27  67 113 158 206 184 115  72  31   8   3
+```
+
+---
+
+Win probabilities
+
+
+```r
+table(win_total) / n
+```
+
+```
+## win_total
+##     2     3     4     5     6     7     8     9    10    11    12    13 
+## 0.004 0.012 0.027 0.067 0.113 0.158 0.206 0.184 0.115 0.072 0.031 0.008 
+##    14 
+## 0.003
+```
+
+```r
+sum(win_total &gt;= 9) / n
+```
+
+```
+## [1] 0.413
+```
+
+---
+
+# Learning R
+
+## Resources
+
+- StackOverflow
+- DataCamp introduction
+- Rstudio cheatsheets
+
+## General Advice
+
+- Just trying something has no cost; guess and check
+ 
+???
+ Would this work?
+
+---
+
+
+
+&lt;img src="tryingstuffuntilitworks-big.png" width="400px" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+# R Syntax
+
+
+```r
+# this is a comment
+
+# use R as a calculator
+3 * (5 + sqrt(2) + pi)
+```
+
+```
+## [1] 28.66742
+```
+
+
+```r
+# assignment
+a &lt;- TRUE
+b = 2
+```
+
+---
+
+Control Flow
+
+
+```r
+# conditional
+if (!a) {
+  print("hello")
+} else {
+  print("goodbye")
+}
+```
+
+```
+## [1] "goodbye"
+```
+
+```r
+# for loop
+for (i in 1:10) {
+  cat(i)
+}
+```
+
+```
+## 12345678910
+```
+
+```r
+# while loop
+x &lt;- 4
+while (x &gt; 0) {
+  cat(x ^ 2)
+  cat(" ")
+  x &lt;- x - 1
+}
+```
+
+```
+## 16 9 4 1
+```
+
+---
+
+Data Types
+
+
+```r
+# vectors
+vec1 &lt;- c(1, 5, 4, 3)
+vec2 &lt;- 1:10
+vec3 &lt;- seq(from = -4, by = 4, to = 2)
+```
+
+
+```r
+# everything is a vector
+length(3)
+length(vec1)
+```
+
+```
+## [1] 1
+## [1] 4
+```
+
+
+```r
+# lists
+list1 &lt;- list(1, "a", 3)
+list1
+```
+
+```
+## [[1]]
+## [1] 1
+## 
+## [[2]]
+## [1] "a"
+## 
+## [[3]]
+## [1] 3
+```
+
+---
+
+
+```r
+# data frames
+names &lt;- c("Bob", "Fatima", "Pierre")
+df &lt;- data.frame(age = c(10, 15, 23),
+                 name = names)
+df
+```
+
+```
+##   age   name
+## 1  10    Bob
+## 2  15 Fatima
+## 3  23 Pierre
+```
+
+
+```r
+# get a column, 3 ways to do same thing
+df[, "name"]
+df$name
+df[, 2]
+```
+
+```
+## [1] Bob    Fatima Pierre
+## Levels: Bob Fatima Pierre
+## [1] Bob    Fatima Pierre
+## Levels: Bob Fatima Pierre
+## [1] Bob    Fatima Pierre
+## Levels: Bob Fatima Pierre
+```
+
+
+```r
+colnames(df)
+dim(df)
+```
+
+```
+## [1] "age"  "name"
+## [1] 3 2
+```
+
+---
+
+Reading/writing data sets
+
+
+```r
+# write df to csv, look at directory contents
+write.csv(df, "demo_file.csv", row.names = FALSE)
+dir()
+```
+
+```
+## [1] "demo_file.csv"                   "intro_r_tutorial_files"         
+## [3] "intro_r_tutorial.html"           "intro_r_tutorial.pdf"           
+## [5] "intro_r_tutorial.Rmd"            "roster_509_f2018.csv"           
+## [7] "tryingstuffuntilitworks-big.png"
+```
+
+
+```r
+# read df back in
+df2 &lt;- read.csv("demo_file.csv")
+df
+```
+
+```
+##   age   name
+## 1  10    Bob
+## 2  15 Fatima
+## 3  23 Pierre
+```
+
+```r
+df2
+```
+
+```
+##   age   name
+## 1  10    Bob
+## 2  15 Fatima
+## 3  23 Pierre
+```
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
