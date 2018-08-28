@@ -1,11 +1,11 @@
 ---
 title: "Topic 0: Introduction and R tutorial"
-author: "Patrick Ding"
+#author: "Patrick Ding"
 date: "8/28/2018"
 output: 
-  tufte::tufte_handout: default
-  # xaringan::moon_reader:
-    # css: [default, tamu, tamu-fonts]
+  # tufte::tufte_handout: default
+  xaringan::moon_reader:
+    css: [default, tamu, tamu-fonts]
 ---
 
 ```{r setup, include=FALSE}
@@ -28,11 +28,10 @@ set.seed(1)
 
 # What is Statistics?
 
-- Statistics: the science of learning from data.
+> Statistics is the science of learning from data, and of measuring, controlling, and communicating uncertainty; and it thereby provides the navigation essential for controlling the course of scientific and societal advances.
 
-- Anticipated learning outcomes:
-    - appreciate and apply basic statistical methods in an everyday life setting
-    - appreciate and apply basic statistical methods in their scientific field
+-- Marie Davidian and Thomas A. Louis, *Why Statistics?*, Science 2012.
+
 
 `r if (doc_type == "html") {"---"}`
 
@@ -76,7 +75,7 @@ plot(roster_major, las = 2, ylab = "Students",
     - Ensemble forecasts
     
 - Economics
-    - Causal inference
+    - Dynamic stochastic general equilibrium models
     - Factor investing
     
 - Chemistry
@@ -86,11 +85,15 @@ plot(roster_major, las = 2, ylab = "Students",
 
 - Humanities
     - Topic modeling
-    - "Distant reading"
+    - Distant reading
 
 - Psychology
     - Personality testing
-    - Experimental design
+    - Standardized testing
+    
+- Politics
+    - Polling
+    - Ideal point models
 
 - Marketing
     - Market basket analysis
@@ -176,6 +179,30 @@ knitr::include_graphics("tryingstuffuntilitworks-big.png")
 
 `r if (doc_type == "html") {"---"}`
 
+# Using R
+
+```{r echo = FALSE}
+knitr::include_graphics("rstudio_pic.png")
+```
+
+`r if (doc_type == "html") {"---"}`
+
+# Suggested workflow
+
+1. Open Rstudio
+
+2. Change working directory: Ctrl + Shift + h
+
+3. Create script: Ctrl + Shift + n
+
+4. Write, save code in script
+
+5. Run code
+    1. source the script, or
+    2. run line by line
+
+`r if (doc_type == "html") {"---"}`
+
 # R Syntax
 
 ```{r}
@@ -185,17 +212,23 @@ knitr::include_graphics("tryingstuffuntilitworks-big.png")
 3 * (5 + sqrt(2) + pi)
 ```
 
-```{r}
+```{r assignment}
 # assignment
 a <- TRUE
 b = 2
+```
+
+```{r comparison}
+# comparison
+10 > 20
+is.na(NA) & (5 > b)
 ```
 
 `r if (doc_type == "html") {"---"}`
 
 Control Flow
 
-```{r}
+```{r control flow}
 # conditional
 if (!a) {
   print("hello")
@@ -221,28 +254,44 @@ while (x > 0) {
 
 Data Types
 
-```{r}
+```{r vectors}
 # vectors
 vec1 <- c(1, 5, 4, 3)
 vec2 <- 1:10
-vec3 <- seq(from = -4, by = 4, to = 2)
+vec3 <- seq(from = -4, to = 2, by = 2)
 ```
 
-```{r results = "hold"}
-# everything is a vector
-length(3)
-length(vec1)
+```{r vector subsetting}
+# get first element
+vec1[1]
+
+# change 2nd element value
+vec1[2] <- 1000
+vec1
+
+# get length
+length(vec3)
 ```
 
-```{r}
+`r if (doc_type == "html") {"---"}`
+
+```{r lists}
 # lists
 list1 <- list(1, "a", 3)
 list1
 ```
 
+```{r subsetting and selection}
+# get first element, not a list
+list1[[1]]
+
+# get sublist, this is a list
+list1[1]
+```
+
 `r if (doc_type == "html") {"---"}`
 
-```{r}
+```{r data frame}
 # data frames
 names <- c("Bob", "Fatima", "Pierre")
 df <- data.frame(age = c(10, 15, 23),
@@ -266,15 +315,78 @@ dim(df)
 
 Reading/writing data sets
 
-```{r}
+```{r write.csv}
 # write df to csv, look at directory contents
 write.csv(df, "demo_file.csv", row.names = FALSE)
 dir()
 ```
 
-```{r}
+```{r read.csv}
 # read df back in
 df2 <- read.csv("demo_file.csv")
 df
 df2
+```
+
+`r if (doc_type == "html") {"---"}`
+
+Plotting
+
+```{r plots, fig.align = "center"}
+y_vals <- rnorm(100)
+boxplot(y_vals)
+```
+
+`r if (doc_type == "html") {"---"}`
+
+Functions
+
+```{r functions}
+# define function
+hello_func <- function(name, response = "hello") {
+  paste0(name, " says ", response)
+}
+
+# call function
+hello_func("Patrick")
+
+# see function
+hello_func
+
+# override default argument
+hello_func("Patrick", response = "goodbye")
+```
+
+`r if (doc_type == "html") {"---"}`
+
+Getting help
+
+Use `?` or `help()`
+
+```{r help commands}
+?hist
+
+help(read.csv)
+```
+
+`r if (doc_type == "html") {"---"}`
+
+Packages
+
+Stand on the shoulders of giants
+
+```{r fig.height = 4, fig.width = 6, fig.align = "center"}
+# download a package, lattice
+# install.packages(lattice)
+
+# call a function from a package
+lattice::barchart(roster_major)
+```
+
+`r if (doc_type == "html") {"---"}`
+
+```{r fig.height = 4, fig.width = 6, fig.align = "center"}
+# load packages into environment, call function directly
+library(lattice) 
+dotplot(roster_major)
 ```
