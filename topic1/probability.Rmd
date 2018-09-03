@@ -3,9 +3,9 @@ title: "Topic 1: Probability"
 author: "STAT 211 - 509"
 date: "9/4/2018"
 output: 
-  tufte::tufte_handout: default
-  # xaringan::moon_reader:
-    # css: [default, tamu, tamu-fonts]
+  # tufte::tufte_handout: default
+  xaringan::moon_reader:
+    css: [default, tamu, tamu-fonts]
 ---
   
 ```{r setup, include=FALSE}
@@ -13,23 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 doc_type <- knitr::opts_knit$get("rmarkdown.pandoc.to")
 set.seed(1)
 
-inc <- function() {
-  if (doc_type == "html") {
-    "--"
-  }
-  else{
-    ""
-  }
-}
-
-ns <- function() {
-  if (doc_type == "html") {
-    "---"
-  }
-  else{
-    ""
-  }
-}
+source("../slide_tools.R")
 ```
 
 # Sample spaces and events
@@ -40,7 +24,7 @@ ns <- function() {
 
 - **Event**: any collection (subset) of outcomes contained in the sample space S.
 
-`r if (doc_type == "html") {"---"}`
+`r ns(doc_type)`
 
 ## Example
 
@@ -51,7 +35,7 @@ first toss is heads"
 
 - Event: $A = \{HH, HT\}$
 
-`r if (doc_type == "html") {"---"}`
+`r ns(doc_type)`
 
 ## Set operations
 
@@ -59,12 +43,13 @@ first toss is heads"
   of all outcomes that are either in A, in B, or in both
 
 - The **intersection** of two events $A$ and $B$, denoted $A \cap B$ is the 
-  consisting of all outcomes in both A and B. 
+  consisting of all outcomes in both $A$ and $B$. $A$ and $B$ are **mutually 
+  exclusive** if they do not have any outcomes in common.
   
 - The **complement** of an event $A$, denoted $A'$, is the set of all outcomes in
   $S$ that are not contained in $A$
   
-`r if (doc_type == "html") {"---"}`
+`r ns(doc_type)`
   
 # Probability
 
@@ -76,7 +61,7 @@ first toss is heads"
 - The assignments $P(\cdot)$ should satisfy axioms that accord with intuitive
   notions of probability
 
-`r if (doc_type == "html") {"---"}`
+`r ns(doc_type)`
   
 ## Axioms of probability
 
@@ -87,7 +72,7 @@ first toss is heads"
 3. If $A_1, A_2, \ldots, A_k$ is a collection of mutually exclusive events, then
    $$P(A_1 \cup A_2 \cup \cdots \cup A_k) = \sum_{i=1}^k P(A_i)$$
 
-`r if (doc_type == "html") {"---"}`
+`r ns(doc_type)`
 
 ## Implications
 
@@ -102,30 +87,30 @@ first toss is heads"
 $$ P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
 
 
-`r if (doc_type == "html") {"---"}`
+`r ns(doc_type)`
 
 ## Example
 
 Toss a fair coin twice. What is the probability that at least one toss is heads?
 First, define relevant events
 
-`r inc()`
+`r inc(doc_type)`
 
 + Sample space: $S = \{HH, HT, TH, TT\}$
 
-`r inc()`
+`r inc(doc_type)`
 
 + Let $A = \{\text{at least one toss is heads}\} = HH \cup HT \cup TH$
 
 What is $P(A)$?
 
-`r ns()`
+`r ns(doc_type)`
 
 + Union: 
 
 $$P(A) = P(HH \cup HT \cup TH) = \frac{1}{4} + \frac{1}{4} + \frac{1}{4} = \frac{3}{4}$$
 
-`r inc()`
+`r inc(doc_type)`
 
 + Complement: 
 
@@ -139,7 +124,7 @@ P(A) &= 1 - P(A') = \frac{3}{4}
 \end{aligned}
 $$
 
-`r inc()`
+`r inc(doc_type)`
 
 + Another:
 
@@ -157,7 +142,7 @@ P(A) &= P(H_1 \cup H_2)
 \end{aligned}
 $$
 
-`r ns()`
+`r ns(doc_type)`
 
 What is the probability exactly one toss is heads?
 
@@ -165,7 +150,7 @@ $H_1 = \{\text{heads on first toss}\}$ and $H_2 = \{\text{heads on second toss}\
 
 $A = \{\text{exactly one toss is heads}\} = (H_1 \cap H_2') \cup (H_1' \cap H_2)$
 
-`r ns()`
+`r ns(doc_type)`
 
 # Uniform probability
 
@@ -174,7 +159,7 @@ Each outcome is equally likely. If there are $m$ outcomes in event $A$, then
 
 $$P(A) = \frac{m}{N}$$
 
-`r ns()`
+`r ns(doc_type)`
 
 ## Example
 
@@ -202,13 +187,13 @@ $$
 
 What is the probability that the sum of the two faces is 7?
 
-`r inc()`
+`r inc(doc_type)`
 
 $A = \{\text{sum of the two faces is } 7\} = \{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\}$
 
 6 outcomes in $A$, 36 possible outcomes: $P(A) = \frac{6}{36} = \frac{1}{6}$
 
-`r ns()`
+`r ns(doc_type)`
 
 # Counting
 
@@ -218,7 +203,17 @@ Suppose we toss a coin 10 times.
 + How many would have exactly 4 heads?
 + What is the probability of exactly 4 heads?
 
-`r ns()`
+`r ns(doc_type)`
+
+## Counting rules
+
+- Rule of sum: if there are $a$ ways to do thing one and $b$ ways to do thing two,
+  and you can't do both things, then there are $a+b$ things to do in total
+
+- Rule of product: if there are $a$ ways to do thing one, $b$ ways to do thing two,
+  then there are $ab$ ways to do both
+
+`r ns(doc_type)`
 
 ## Binomial coefficient
 
@@ -232,7 +227,7 @@ Suppose we toss a coin 10 times.
 
 + The number of distinct ways of choosing $k$ objects out of $n$
 
-`r ns()`
+`r ns(doc_type)`
 
 ## Example
 
@@ -240,23 +235,23 @@ We toss a coin 10 times
 
 + How many possible outcomes are there?
 
-`r inc()`
+`r inc(doc_type)`
 
 $2^{10}$
 
 + How many of these outcomes have exactly 4 heads?
 
-`r inc()`
+`r inc(doc_type)`
 
 ${10 \choose 4}$
 
 + What is the probability of exactly 4 heads?
 
-`r inc()`
+`r inc(doc_type)`
 
 $P(X = 4) = \frac{{10 \choose 4}}{2^{10}} = \frac{210}{1024} = 0.205078125$
 
-`r ns()`
+`r ns(doc_type)`
 
 # Independence
 
@@ -275,7 +270,7 @@ $$P(A \cap B) = P(A)P(B)$$
     - Multiple measurements of same individual over time
     - Measurements located near each other
 
-`r ns()`
+`r ns(doc_type)`
 
 ## NFL example
 
@@ -287,7 +282,7 @@ Are the outcomes of two games independent of one another?
       the team *less* motivated for next?
 - Suppose team has won 5 games in a row. Do they have momentum?
 
-`r ns()`
+`r ns(doc_type)`
 
 # Random variables and distributions
 
@@ -300,7 +295,7 @@ Are the outcomes of two games independent of one another?
     
     - a function that maps from sample space to real numbers: $X: S \rightarrow \mathbb{R}$
 
-`r ns()`
+`r ns(doc_type)`
 
 ## Types of random variables
 
@@ -314,7 +309,7 @@ Are the outcomes of two games independent of one another?
   distributed (iid)** if they are mutually independent and all follow the same 
   distribution
 
-`r ns()`
+`r ns(doc_type)`
 
 ## Probability for discrete random variables
 
@@ -331,7 +326,7 @@ Are the outcomes of two games independent of one another?
   For any number $x$, $F(x)$ is the probability that the observed value of $X$ 
   will be at most $x$
 
-`r ns()`
+`r ns(doc_type)`
 
 ## Example
 
@@ -339,7 +334,7 @@ Flip a fair coin twice. Derive and plot the pmf and cdf. Let $X$ be the random
 variable that equals the number of occurences of heads. The possible values of 
 $X$ are $0,1,2$.
 
-`r inc()`
+`r inc(doc_type)`
 
 - pmf: 
 $$
@@ -365,7 +360,7 @@ P(X \le x) = \begin{cases}
 \end{aligned}
 $$
 
-`r ns()`
+`r ns(doc_type)`
 
 ```{r echo = FALSE}
 par(mfrow = c(1, 2))
@@ -375,7 +370,7 @@ plot(0:2, probs, ylim = c(0, .5), type = "h", ylab = "PMF", xlab = "X")
 plot(ecdf(cdf_obs), ylab = "CDF", xlab = "X", main = "")
 ```
 
-`r ns()`
+`r ns(doc_type)`
 
 # The binomial distribution
 
@@ -386,7 +381,6 @@ plot(ecdf(cdf_obs), ylab = "CDF", xlab = "X", main = "")
   experiment is 0 if trial is a failure, 1 if it is a success.
   
 - pmf of $X$:
-  
   $$
   f(x) = \begin{cases} 
     p^x (1-p)^{1-x} & x \in \{0, 1\}
@@ -397,7 +391,7 @@ plot(ecdf(cdf_obs), ylab = "CDF", xlab = "X", main = "")
 
 - $p$ is **parameter** of the distribution, must know to evaluate $f(x)$
 
-`r ns()`
+`r ns(doc_type)`
 
 ## Binomial distribution
 
@@ -406,7 +400,6 @@ plot(ecdf(cdf_obs), ylab = "CDF", xlab = "X", main = "")
   number of successes out of the $n$ trials
 
 - pmf of $X$:
-
   $$
   f(x) = \begin{cases} 
     {n \choose x} p^x (1-p)^{1-x} & x \in 0, 1, \ldots, n
@@ -419,18 +412,18 @@ plot(ecdf(cdf_obs), ylab = "CDF", xlab = "X", main = "")
 
 - We write $X \sim Binomial(n, p)$
 
-`r ns()`
+`r ns(doc_type)`
 
 ## Example
 
 Suppose we toss a coin 10 times. $X \sim Binomial(10, 0.5)$. What is the 
 probability of exactly 4 heads?
 
-`r inc()`
+`r inc(doc_type)`
 
 $$P(X=4) = f(4) = {10 \choose 4} 0.5^4 0.5^{10-4} = 0.205078125$$
 
-`r ns()`
+`r ns(doc_type)`
 
 ## NFL example
 
@@ -440,30 +433,48 @@ $$P(X=4) = f(4) = {10 \choose 4} 0.5^4 0.5^{10-4} = 0.205078125$$
   
 - Suppose that $p=0.5$. What is the probability the Texans win 9 or more games in a season?
 
-`r inc()`
+`r inc(doc_type)`
 
 - $P(X \ge 9) = \sum_{x=9}^{16} f(x) = 0.4018097$
 
 - Would not be unusual at all for an “average” team to win 9 or more games in a season, just by chance.
 
-`r ns()`
+`r ns(doc_type)`
 
 # Other discrete distributions
 
 - **Discrete uniform distribution**: rv $X$ with integer parameters $a$, $b$, 
   $a \le b$, with pmf:
-  
   $$ f(x) = \frac{1}{b - a + 1} \quad x = a, a+1, \ldots, b-1, b$$
   
 - **Geometric distribution**: rv $X$ with parameter $p>0$, with pmf:
-
   $$f(x) = (1-p)^xp \quad x = 0, 1, 2, \ldots$$
   
   Describes the number of failures required until the first success in a series
   of Bernoulli trials
-
-- **Poisson distribution**: rv with parameter $\lambda>0$, with pmf:
-
-  $$ f(x) = \frac{e^{-\lambda}\lambda^x}{x!} \quad x = 0, 1, 2, \ldots$$
   
+- **Poisson distribution**: rv with parameter $\lambda>0$, with pmf:
+  $$ f(x) = \frac{e^{-\lambda}\lambda^x}{x!} \quad x = 0, 1, 2, \ldots$$
+
   Describes counts of events, like number of 911 calls on Friday night
+
+`r ns(doc_type)`
+
+# Binomial distribution in R
+
+- $X \sim Binomial(10, .3)$
+
+- $P(X = 3)$:
+```{r}
+n <- 10
+p <- .3
+dbinom(3, n, p)
+```
+
+- $P(X \ge 3)$:
+```{r}
+1 - pbinom(3, n, p)
+pbinom(3, n, p, lower.tail = FALSE)
+```
+
+

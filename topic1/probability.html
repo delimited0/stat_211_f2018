@@ -48,7 +48,8 @@ first toss is heads"
   of all outcomes that are either in A, in B, or in both
 
 - The **intersection** of two events `\(A\)` and `\(B\)`, denoted `\(A \cap B\)` is the 
-  consisting of all outcomes in both A and B. 
+  consisting of all outcomes in both `\(A\)` and `\(B\)`. `\(A\)` and `\(B\)` are **mutually 
+  exclusive** if they do not have any outcomes in common.
   
 - The **complement** of an event `\(A\)`, denoted `\(A'\)`, is the set of all outcomes in
   `\(S\)` that are not contained in `\(A\)`
@@ -206,6 +207,16 @@ Suppose we toss a coin 10 times.
 + How many outcomes are there?
 + How many would have exactly 4 heads?
 + What is the probability of exactly 4 heads?
+
+---
+
+## Counting rules
+
+- Rule of sum: if there are `\(a\)` ways to do thing one and `\(b\)` ways to do thing two,
+  and you can't do both things, then there are `\(a+b\)` things to do in total
+
+- Rule of product: if there are `\(a\)` ways to do thing one, `\(b\)` ways to do thing two,
+  then there are `\(ab\)` ways to do both
 
 ---
 
@@ -369,7 +380,6 @@ $$
   experiment is 0 if trial is a failure, 1 if it is a success.
   
 - pmf of `\(X\)`:
-  
   $$
   f(x) = \begin{cases} 
     p^x (1-p)^{1-x} &amp; x \in \{0, 1\}
@@ -389,7 +399,6 @@ $$
   number of successes out of the `\(n\)` trials
 
 - pmf of `\(X\)`:
-
   $$
   f(x) = \begin{cases} 
     {n \choose x} p^x (1-p)^{1-x} &amp; x \in 0, 1, \ldots, n
@@ -436,18 +445,53 @@ probability of exactly 4 heads?
 - **Discrete uniform distribution**: rv `\(X\)` with integer parameters `\(a\)`, `\(b\)`, 
   `\(a \le b\)`, with pmf:
   $$ f(x) = \frac{1}{b - a + 1} \quad x = a, a+1, \ldots, b-1, b$$`
+  
 - **Geometric distribution**: rv `\(X\)` with parameter `\(p&gt;0\)`, with pmf:
-
   `$$f(x) = (1-p)^xp \quad x = 0, 1, 2, \ldots$$`
   
   Describes the number of failures required until the first success in a series
   of Bernoulli trials
-
-- **Poisson distribution**: rv with parameter `\(\lambda&gt;0\)`, with pmf:
-
-  $$ f(x) = \frac{e^{-\lambda}\lambda^x}{x!} \quad x = 0, 1, 2, \ldots$$`
   
+- **Poisson distribution**: rv with parameter `\(\lambda&gt;0\)`, with pmf:
+  $$ f(x) = \frac{e^{-\lambda}\lambda^x}{x!} \quad x = 0, 1, 2, \ldots$$`
+
   Describes counts of events, like number of 911 calls on Friday night
+
+---
+
+# Binomial distribution in R
+
+- `\(X \sim Binomial(10, .3)\)`
+
+- `\(P(X = 3)\)`:
+
+```r
+n &lt;- 10
+p &lt;- .3
+dbinom(3, n, p)
+```
+
+```
+## [1] 0.2668279
+```
+
+- `\(P(X \ge 3)\)`:
+
+```r
+1 - pbinom(3, n, p)
+```
+
+```
+## [1] 0.3503893
+```
+
+```r
+pbinom(3, n, p, lower.tail = FALSE)
+```
+
+```
+## [1] 0.3503893
+```
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create();
