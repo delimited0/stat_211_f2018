@@ -1,0 +1,515 @@
+---
+title: ''
+author: STAT 211 - 509
+date: 2018-09-06
+output:
+  xaringan::moon_reader:
+    css: ["default", "tamu", "tamu-fonts"]
+  lib_dir: libs
+  nature:
+    highlightStyle: github
+    highlightLines: true
+    countIncrementalSlides: false
+---
+#  Topic 1: Data collection and summarization 
+
++ Populations and samples
++ Frequency distributions
++ Histograms
++ Mean, median, variance and standard deviation
++ Quartiles, interquartile range
++ Boxplots
+
+---
+#  3 
+
++ What is Statistics?
++ What do you think of when you hear the word “statistics”?
++ Statistics: The science of collecting, classifying, and interpreting data.
++ Anticipated learning outcomes:
+	+ appreciate and apply basic statistical methods **in an everyday life setting**
+	+ appreciate and apply basic statistical methods **in their scientific field**
+
+
+---
+#  Where will Statistics be used? 
+
++ Everyday life – for example
+	+ Proper application of general probabilities
+	+ How election results are presented
+	+ Commercial claims (clinical trials vs. outliers)
++ Applications in the workplace
+	+ Google web searches
+	+ Netflix user recommendations
+	+ Pharmaceutical drug development
+	+ Sports analytics
+	+ Modeling global climate change
+	+ Credit card fraud detection
+	+ Biomarkers and disease detection
+	+ Criminal justice
+	+ Many, many more
+
+---
+
+![](assets/img/image3.png)
+
+---
+#  6 
+
++ Collecting data
++ **Observational study** : Observe a group and measure quantities of interest.  This is passive data collection in that one does not attempt to influence the group.  The purpose of the study is to describe the group.
++ **Experiment:** Deliberately impose treatments on groups in order to observe responses.  The purpose is to study whether the treatments cause a change in the responses.
+
+
+---
+#  7 
+
++ Observational Study Terms
++ **Population:** The entire group of interest
++ **Sample:** A part of the population selected to draw conclusions about the entire population
++ **Census:** A sample that attempts to include the entire population
++ **Parameter:** A concept that describes the population
++ **Statistic:** A number produced from a sample that estimates a population parameter 
+
+
+---
+#  8 
+
++ Horry County SC, Murder Case
++ Do juries properly represent the racial makeup of Horry County which is 13% African American?
++ 295 jurors summoned, 22 were African American
++ What is the population parameter of interest?
++ What sample statistic could be used to estimate the parameter and does the sample support the claim?
+
+
+---
+#  9 
+
++ Experiment Terms
++ **Experimental Group:** A collection of experimental units subjected to a difference in treatment, imposed by the experimenter.
++ **Control Group:** A collection of experimental units subjected to the same conditions as those in an experimental group except that no treatment is imposed.
++ This design helps control for potential **confounding** effects.
+
+
+---
+#  10 
+
++ What are “confounding” effects?
++ When you have multiple factors in a study and you can’t tell which factor causes a change in the variable of interest.
++ Example:  Does going to church make you live longer?.....Not necessarily. There are too many other factors or “lurking variables”, discussed later.
++ Best to set up study with everything else constant and have only one factor changed.  That way, you’re more apt to identify that the change in the variable is due to the change you instituted in the study.
+
+
+---
+#  11 
+
++ NCTR study (National Center for Toxicological Research)
++ A large scale study was conducted to see if a new drug might have potential toxic effects.  They used rats for the experiment.
++ Dose groups of 0, 100, 200, and 400 ppg were evaluated for liver tumors at the end of a two week exposure to the drug.  (which is the control and which are the experimental groups?)
++ What comparisons would you want to make?
++ Should you evaluate each group on consecutive days at the end of the study?
+
+
+---
+#  12 
+
++ Working with R
++ R and R Stuido are free software environments for statistical computing and graphics.  I’ll be demonstrating the use of R Studio in this class.
++ R is free and you can download it from https:// rweb.crmda.ku.edu/cran/ .  Once that is downloaded, got to the following site and download R-Studio to run with it; https ://www.rstudio.com/products/rstudio/download / . It acts as a layered program/interface on top of R.
++ There are “R Tutorial” videos through “Lynda”, referenced in the information tab in eCampus. I’ll be demonstrating R Studio and giving you some “canned scripts” to perform various tasks through the semester.  STAT majors need to dig a bit deeper.
++ Suggest copying all datasets to be used (in class and homework) to your working directory in R studio for ease of use.
+
+ 
+[https://](https://rweb.crmda.ku.edu/cran/)
+[rweb.crmda.ku.edu/cran/](https://www.rstudio.com/products/rstudio/download/)
+[https](https://rweb.crmda.ku.edu/cran/)
+[://www.rstudio.com/products/rstudio/download](https://www.rstudio.com/products/rstudio/download/)
+[/](https://rweb.crmda.ku.edu/cran/)
+
+
+---
+#  13 
+
++ All about variables
++ **Variable:** Any characteristic or quantity to be measured on units in a study
++ **Categorical variable:** Places a unit into one of several categories
+	+ Examples: Gender, race, political party
++ **Quantitative variable:** Takes on numerical values for which arithmetic makes sense
+	+ Examples: SAT score, number of siblings, cost of textbooks
++ **Univariate** data has one variable.
++ **Bivariate** data has two variables.
++ **Multivariate** data has three or more variables.
+
+
+---
+#  14 
+
++ Cereal data
+
+ 
+
+```{r tbl13, echo = FALSE}
+tbl13 <- tibble::tribble(
+~`mfr`, ~`A = American Home; G = General Mills; K = Kelloggs; N = Nabisco; P = Post; Q = Quaker Oats; R = Ralston Purina`,
+"type","cold or hot",
+"calories","calories per serving",
+"protein","grams of protein",
+"fat","grams of fat",
+"sodium","milligrams of sodium",
+"fiber","grams of dietary fiber",
+"carbo","grams of complex carbohydrates",
+"sugars","grams of sugars",
+"potass","milligrams of potassium",
+"vitamins","vitamins and minerals - 0, 25, or 100, indicating the typical percentage of FDA recommended",
+"shelf","display shelf (1, 2, or 3, counting from the floor)",
+"weight","weight in ounces of one serving",
+"cups","number of cups in one serving",
+"rating","a rating of the cereal"
+)
+
+kableExtra::kable_styling(knitr::kable(tbl13), font_size = 18)
+```
+
+
+---
+#  15 
+
++ Summarizing a single categorical variable
++ **Frequency** - number of times the value occurs in the data
++ **Relative frequency** - proportion of the data with the value
+
+ 
+---
+class: inverse
+background-image: url('assets/img/image4.png')
+background-size: cover
+
+---
+class: inverse
+background-image: url('assets/img/image6.png')
+background-size: cover
+
+---
+class: inverse
+background-image: url('assets/img/image5.png')
+background-size: cover
+
+
+
+---
+#  16 
+
++ Analyzing a single quantitative variable
++ Consider the **concentration data** which contains the concentration of suspended solids in parts per million at 50 locations along a river.
++ What is a **typical** concentration? (Generally characterized by the center of the data)
++ How much **spread** is there in the concentrations along the river?  (Generally, the relative “width” of the data…how dispersed they are around the center)?
++ Wide versus narrow and the inherent good and bad things about spread.
+	+ Discuss the difference in typical and spread if taken at a single point on the river, versus several points along the river.
+
+
+---
+#  17 
+
++ Histograms
++ **Histogram** - bar graph of binned data where the height of the bar above each bin denotes the frequency (relative frequency) of values in the bin
++ Typical concentration?
++ Spread?
++ Roughly how many concentrations below 50?
+![](assets/img/image7.png)
+
+
+---
+#  18 
+
++ Choosing the number of histogram bins
++ General rule:
+	+ Most stat packages will do this for you, but sometimes you may want to change the number of bins or categories, depending on what you want the data to convey….
++ Consider the **Old Faithful data.**
+![](assets/img/image8.wmf)
+
+
+---
+#  19 
+
++ Describing the shape of quantitative data
++ **Symmetric** data has roughly the same mirror image on each side of a center value.
++ **Skewed** data has one side (either **right** or **left** ) which is much longer than the other relative to the **mode** (peak value).
+	+ The above definitions are most useful when describing data with a single mode.
++ **Multimodal** data has more than one mode.
++ Beware of **outliers** when describing shape.
++ Shape of the **concentration data?**
+
+
+---
+#  20 
+
++ States data from 1996
++ Define the shape of each variable.
+
+```{r tbl19, echo = FALSE}
+tbl19 <- tibble::tribble(
+~`POVERTY`, ~`percentage of the state population living in poverty`,
+"CRIME","violent crime rate per 100,000 population",
+"COLLEGE","percentage of states population who are enrolled in college",
+"METRO","percentage of the state population living in a metropolitan area",
+"INCOME","median household income in 1996 dollars"
+)
+
+kableExtra::kable_styling(knitr::kable(tbl19), font_size = 18)
+```
+
+
+---
+#  R script for histograms of state data 
+
+
+#  The following script loads the states data and creates the
+
+#  basic histograms for all the variables.
+
+**dta<-read.csv("states.csv")**
+
+**attach(dta)**
+
+**names(dta)**
+
+**options(digits=10)**
+
+**summary(dta)**
+
+**hist(POVERTY)**
+
+hist(CRIME)
+
+# Problem with this histogram; it contains outliers
+
+**hist(CRIME[CRIME<1501])**
+
+hist(COLLEGE)
+
+hist(METRO)
+
+hist(INCOME)
+
+hist(INCOME[INCOME<45001])
+
+---
+#  Shapes of states data – Percentage living in poverty  
+
+
+![](assets/img/image9.png)
+
+---
+#  Shapes of states data – Violent crime rates per 100K 
+
+
+.pull-left[![](assets/img/image11.png)]
+
+.pull-right[![](assets/img/image10.png)]
+
+---
+#  Shapes of states data - % living in metro area 
+
+
+![](assets/img/image12.png)
+
+---
+#  Shapes of states data – Income 
+
+
+.pull-left[![](assets/img/image14.png)]
+
+.pull-right[![](assets/img/image13.png)]
+
+---
+#  26 
+
++ Summary statistics for quantitative data
++ **Measures of central tendency (typical)**
++ The **sample median** is the middle observation if the values are arranged in increasing order.
++ The **sample mean** of *n* observations is the average, the sum of the values divided by *n.*
+.pull-left[![](assets/img/image16.wmf)]
+
+.pull-right[![](assets/img/image15.wmf)]
+
+
+---
+#  27 
+
++ Summary statistics for quantitative data
++ ***p*** **th** **percentile** -the value such that *p* ×100% of values are below it and (1- *p* ) ×100% are above it *(How to actually find the value?  Multiply the percentile by # of observations and round up if necessary).*
++ **first quartile (Q1)** is the 25th percentile
+	+ **second quartile (Q2)** 50th percentile (median)
+	+ **third quartile (Q3)** is the 75th percentile
++ **5-number summary** : Min, Q1, Q2, Q3, Max
+.pull-left[![](assets/img/image17.png)]
+
+.pull-right[![](assets/img/image18.png)]
+
+
+---
+
+![](assets/img/image17.png)
+
+
+---
+#  29 
+
++ Summary statistics for quantitative data
++ **Measures of spread:**
+	+ **Interquartile range** , **IQR** = Q3-Q1, the range of the middle 50% of the data
+	+ **sample variance** , ***s*** **2** , is the sum of squared deviations from the sample mean divided by *n* -1
++ **sample standard deviation** , ***s*** , is the square root of sample variance. *Preferred because it has the same units as the data.*
+.pull-left[![](assets/img/image20.wmf)]
+
+.pull-right[![](assets/img/image19.wmf)]
+
+
+---
+#  Calculation of sample variance (partial from data) 
+
+
+
+```{r tbl29, echo = FALSE}
+tbl29 <- tibble::tribble(
+~`Obs`, ~`x`, ~`x bar`, ~`(x-xbar)`, ~`(x-xbar)^2`, ~`x^2`,
+"1","5","4.4","0.6","0.36","25",
+"2","4","4.4","-0.4","0.16","16",
+"3","3","4.4","-1.4","1.96","9",
+"4","2","4.4","-2.4","5.76","4",
+"5","2","4.4","-2.4","5.76","4",
+"6","5","4.4","0.6","0.36","25",
+"7","7","4.4","2.6","6.76","49",
+"8","3","4.4","-1.4","1.96","9",
+"9","4","4.4","-0.4","0.16","16",
+"10","9","4.4","4.6","21.16","81",
+"Totals","44"," ","0.0","44.4","238"
+)
+
+kableExtra::kable_styling(knitr::kable(tbl29), font_size = 18)
+```
+![](assets/img/image21.wmf)
+
+---
+#  Effect on sample variance from changing one data point 
+
+
+
+```{r tbl30, echo = FALSE}
+tbl30 <- tibble::tribble(
+~`Obs`, ~`x`, ~`x bar`, ~`(x-xbar)`, ~`(x-xbar)^2`, ~`x^2`,
+"1","5","8.9","-3.9","15.21","25",
+"2","4","8.9","-4.9","24.01","16",
+"3","3","8.9","-5.9","34.81","9",
+"4","2","8.9","-6.9","47.61","4",
+"5","2","8.9","-6.9","47.61","4",
+"6","50","8.9","41.1","1689.21","2500",
+"7","7","8.9","-1.9","3.61","49",
+"8","3","8.9","-5.9","34.81","9",
+"9","4","8.9","-4.9","24.01","16",
+"10","9","8.9","0.1","0.01","81",
+"Totals","89"," ","0","1920.9","2713"
+)
+
+kableExtra::kable_styling(knitr::kable(tbl30), font_size = 18)
+```
+![](assets/img/image22.wmf)
+
+---
+#  32 
+
++ R code to obtain Cereal data “ratings” summary statistics by shelf
+
+dta=read.csv("cereal.csv")
+
+attach(dta)
+
+names(dta)
+
+summary.by.group = function(var,group.var) {
+
+boxplot(var~group.var)
+
+group.num = length(levels(factor(group.var )))
+
+summary.table = matrix(0,nrow=group.num,ncol=9)
+
+for (i in 1:group.num) {
+
+a = var[group.var == as.character(levels(factor(group.var))[i])]
+
+summary.table[i,] = round(c(length(a), min(a),quantile(a,.25),median(a),quantile(a,.75),max(a),mean(a),sd(a),sd(a)/length(a)^.5),5)
+
+}
+
+colnames(summary.table) = c('N','Min','Q1','Median','Q3','Max','Mean','SD','SE')
+
+rownames(summary.table) = paste('Group ',levels(factor(group.var)),sep='')
+
+return(summary.table)
+
+}
+
+summary.by.group(rating,shelf)
+
+
+---
+#  33 
+
++ Cereal data “ratings” comparison by shelf
+.pull-left[![](assets/img/image23.png)]
+
+.pull-right[![](assets/img/image24.png)]
+
+
+---
+#  34 
+
++ Comparing measures of central tendency and spread
++ The **sample mean** and the **sample standard deviation** are good measures of center and spread, respectively, for **symmetric** data
++ If the data set is **skewed** or has **outliers** , the **sample median** and the **interquartile range** are more commonly used
++ Note about trimmed mean.
+
+
+---
+#  35 
+
++ Case Study: Salary data
++ A **fictitious** large university decides to study the salaries of their graduates.  A survey was conducted of 2232 recent graduates from engineering and education majors.
++ The **salary data** consists of three variables:
+	+ **Gender** : Male or Female
+	+ **Major** : Education or Engineering
+	+ **Salary** : Reported in $
++ What types of variables do we have?
+
+
+---
+#  36 
+
++ Salary data by major
++ Are both majors equally represented in the survey?
++ Do salaries differ across major?
+.pull-left[![](assets/img/image25.png)]
+
+.pull-right[![](assets/img/image26.png)]
+
+
+---
+#  37 
+
++ Salary data by gender
++ Are both genders equally represented in the survey?
++ Do salaries differ across gender? Discrimination?
+![](assets/img/image27.emf)
+
+
+---
+#  38 
+
++ Salary data by gender within each major
++ How do male and female salaries compare in engineering?
++ How do male and female salaries compare in education?
+.pull-left[![](assets/img/image28.emf)]
+
+.pull-right[![](assets/img/image29.emf)]
+

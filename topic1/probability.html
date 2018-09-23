@@ -250,6 +250,15 @@ We toss a coin 10 times
 
 `\({10 \choose 4}\)`
 
+
+```r
+choose(n = 10, k = 4)
+```
+
+```
+## [1] 210
+```
+
 + What is the probability of exactly 4 heads?
 
 --
@@ -294,11 +303,25 @@ Are the outcomes of two games independent of one another?
 - For a sample space `\(S\)` of some experiment, a **random variable (rv)** is any rule 
   that associates a number with each outcome in `\(S\)`. 
   
-    - variable because different numerical values possible
+- Etymology:  
+    - called "variable" because different numerical values possible
+    - "random" because observed value depends on uncertain experimental outcome
     
-    - random because observed value depends on experimental outcome
-    
-    - a function that maps from sample space to real numbers: `\(X: S \rightarrow \mathbb{R}\)`
+- Function that maps from sample space to real numbers: `\(X: S \rightarrow \mathbb{R}\)`
+
+- Random variables have probability distributions that specify the probability of
+  the rv falling in an interval
+  
+---
+  
+# Why random variables
+
+- Leads to easier math and calculations
+
+- Can define multiple random variables on same probability space
+  
+- In statistics we usually care about distributions of random variables, not 
+  sample space
 
 ---
 
@@ -367,7 +390,7 @@ $$
 
 ---
 
-&lt;img src="probability_files/figure-html/unnamed-chunk-1-1.png" width="672" /&gt;
+&lt;img src="probability_files/figure-html/unnamed-chunk-2-1.png" width="672" /&gt;
 
 ---
 
@@ -422,6 +445,15 @@ probability of exactly 4 heads?
 
 `$$P(X=4) = f(4) = {10 \choose 4} 0.5^4 0.5^{10-4} = 0.205078125$$`
 
+
+```r
+dbinom(x = 4, size = 10, prob = .5)
+```
+
+```
+## [1] 0.2050781
+```
+
 ---
 
 ## NFL example
@@ -435,6 +467,13 @@ probability of exactly 4 heads?
 --
 
 - `\(P(X \ge 9) = \sum_{x=9}^{16} f(x) = 0.4018097\)`
+
+
+```r
+sum(dbinom(9:16, 16, .5))
+1 - pbinom(q = 8, size = 16, prob = .5)
+pbinom(q = 8, size = 16, prob = .5, lower.tail = FALSE)
+```
 
 - Would not be unusual at all for an “average” team to win 9 or more games in a season, just by chance.
 
@@ -456,42 +495,6 @@ probability of exactly 4 heads?
   $$ f(x) = \frac{e^{-\lambda}\lambda^x}{x!} \quad x = 0, 1, 2, \ldots$$`
 
   Describes counts of events, like number of 911 calls on Friday night
-
----
-
-# Binomial distribution in R
-
-- `\(X \sim Binomial(10, .3)\)`
-
-- `\(P(X = 3)\)`:
-
-```r
-n &lt;- 10
-p &lt;- .3
-dbinom(3, n, p)
-```
-
-```
-## [1] 0.2668279
-```
-
-- `\(P(X \ge 3)\)`:
-
-```r
-1 - pbinom(3, n, p)
-```
-
-```
-## [1] 0.3503893
-```
-
-```r
-pbinom(3, n, p, lower.tail = FALSE)
-```
-
-```
-## [1] 0.3503893
-```
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create();

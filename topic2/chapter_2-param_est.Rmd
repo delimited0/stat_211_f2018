@@ -1,0 +1,205 @@
+---
+title: ' Chapter 2: Parameter Estimation '
+author: STAT 211 - 509
+date: 2018-09-05
+output:
+  # tufte::tufte_handout: default
+  xaringan::moon_reader:
+    css: ["default", "tamu", "tamu-fonts"]
+  lib_dir: libs
+  nature:
+    highlightStyle: github
+    highlightLines: true
+    countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+dt <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+set.seed(1)
+
+source("../slide_tools.R")
+```
+
+#  NFL Example 
+
++ Recall that we assumed $X \sim Binomial(16, p)$, where is the number of wins 
+  out of 16 games, and $p$ is the probability of winning any given game
+
++ For the Houston Texans, we observed 9 wins in the 2015 season. But the only way
+  to know the value of absolutely would be to observe an infinite number of games
+
++ Based on our sample of 16 games, what would we say are “plausible” values for $p$?
+
+`r ns(dt)`
+
+#  Deductive Reasoning 
+
++ “Deductive reasoning is the process of reasoning from one or more statements (premises) to reach a logically certain conclusion. If all premises are true, the terms are clear, and the rules of deductive logic are followed, then the conclusion reached is necessarily true.” – Wikipedia 
+
++ Deductive conclusions are either *valid* or *invalid* .
+[Wikipedia](https://en.wikipedia.org/wiki/Deductive_reasoning)
+
+`r ns(dt)`
+
+#  Inductive Reasoning 
+
++ “Inductive reasoning is reasoning in which the premises are viewed as supplying strong evidence for the truth of the conclusion. While the conclusion of a deductive argument is certain, the truth of the conclusion of an inductive argument is *probable* , based upon the evidence given.” – Wikipedia
+
++ Inductive conclusions are either *strong* or *weak* .
+[Wikipedia](https://en.wikipedia.org/wiki/Inductive_reasoning)
+
+`r ns(dt)`
+
+#  Relevance to Statistics 
+
++ Probability is deductive in nature. Given a **probability model** (defined by a sample space, events within the sample space, and probabilities associated with each event), we can compute valid probabilities of specific events (e.g., 9 or more wins in an NFL season ). If our model is correct, then the probability we compute is correct.
+
++ In practice, we will usually not *know* the probability model. We can hypothesize one and ask how likely it would be to observe the data we have if the hypothesized model were true. For example, assuming that season win totals for the Houston Texans follow the distribution, we can construct an interval that most likely contains the true value of . This is the result of inductive reasoning. Our conclusion is strong (probable), but it still may be incorrect .
+
+`r ns(dt)`
+
+#  Statistical Inference 
+
++ Most of the time, when people refer to “statistics,” they have in mind the use of probability models to *infer* characteristics of the population from which a sample of data were obtained.
+
++ Most statistical inference exercises can be identified as being one of the following types:
+	+ **Point estimation** : Estimating a parameter with a single best guess.
+	+ **Confidence intervals** : Interval estimates that capture a parameter with a stated probability.
+	+ **Hypothesis tests** : Make an assumption about the value of a parameter, 
+	and reject this assumption if the observed data would be very unlikely were it true.
+	
++ Statistical inference is inductive in nature, which means we can never know for certain whether our conclusions are correct .
+
+`r ns(dt)`
+
+#  Likelihood 
+
+## Definition 
+
++ Let $X_1, X_2, \ldots, X_n$ be IID discrete random variables with pmf 
+  $f(x; \theta)$
+
++ The **likelihood function** is
+
+  $$L(\theta) = \prod_{i=1}^n f(X_i; \theta)$$
+
+  and the **log-likelihood function** is 
+ 
+  $$l(\theta) = \log L(\theta)$$
+ 
++ The likelihood is a function of $\theta$
+
++ The **maximum likelihood estimator (MLE)** of $\theta$ is $\hat{\theta}$, the 
+  value of $\theta$ that maximizes $L(\theta)$.
+
+`r ns(dt)`
+
+## Example 
+
++ Let $X_1, X_2, \ldots, X_n$ be IID $Bernoulli(p)$ random variables
+
++ The likelihood is
+  
+  $$L(p) = \prod_{i=1}^n p^{x_i}(1-p)^{1-x_i}$$  
+
+  and the log-likelihood is
+  
+  $$l(p) = \log p\sum_{i=1}^n x_i + \log(1-p)\sum_{i=1}^n(1 - x_i)$$
+  
++ Differentiating with respect to $p$, setting equal to zero and solving gives 
+  the MLE
+  
+  $$\hat{p} = \frac{1}{n}\sum_{i=1}^n x_i$$
+
+`r ns(dt)`
+
++ Now let $X = \sum_{i=1}^n$, which is a $Binomial(n,p)$ random variable
+
++ The likelihood is
+
+  $$L(p) = {n \choose x} p^x (1-p)^{n-x}$$
+  
+  and the log-likelihood is
+  
+  $$l(p) = constant + x\log p + (n - x)\log (1-p)$$
+  
++ Differentiating with respect to , setting equal to zero and solving gives the MLE
+  
+  $$\hat{p} = \frac{x}{n}$$
+
+`r ns(dt)`
+
+## NFL Example 
+
++ The Texas won 9 out of 16 games in 2015
+
++ Can apply the binomial model with $n = 16$, $x = 9$, parameter $p$. The mle of
+  $p$ is
+  
+  $$\hat{p} = \frac{9}{16} = 0.5625$$
+
++ This is almost certainly not the true value, but it is our best guess, given the sample data.
+
+`r ns(dt)`
+
+#  Limitations and Alternatives 
+
+-
+```{r echo = FALSE}
+p_hat <- 9 / 16
+
+## Probability of 9 wins, over a range of values for p.
+p <- seq(from = 0.01, to = 0.99, length = 1000)
+prob <- dbinom(9, 16, p)
+
+plot(p, prob, type = "l", lwd = 2, xlab = "p", ylab = "Probability", main = 
+  "Probability of 9 wins for varying p")
+```
+
+`r ns(dt)`
+
+-
+```{r echo = FALSE}
+plot(p, prob, type = "l", lwd = 2, xlab = "p", ylab = "Probability")
+points(p_hat, dbinom(9, 16, p_hat), pch = 20, cex = 2, col = "green")
+lines(rep(p_hat, 2), c(0, dbinom(9, 16, p_hat)), lty = 2)
+text(0.6, 0.01, expression(hat(p) == 0.5625), pos = 4)
+```
+
+`r ns(dt)`
+
+- There is about $20\%$ probability of 9 wins if $p = 0.5625$. But the probability
+  of 9 wins if $p = 0.5$ is about $17.5\%$. Not very different.
+
+  ```{r echo = FALSE}
+  plot(p, prob, type = "l", lwd = 2, xlab = "p", ylab = "Probability")
+  points(p_hat, dbinom(9, 16, p_hat), pch = 20, cex = 2, col = "green")
+  lines(rep(p_hat, 2), c(0, dbinom(9, 16, p_hat)), lty = 2)
+  text(0.6, 0.01, expression(hat(p) == 0.5625), pos = 4)
+  points(0.5, dbinom(9, 16, 0.5), pch = 20, cex = 2, col = "red")
+  lines(rep(0.5, 2), c(0, dbinom(9, 16, 0.5)), lty = 2)
+  axis(1, at = 0.5, col = "red")
+  ```
+
+`r ns(dt)`
+
+#  Limitations of Point Estimates 
+
++ While a single best guess of a parameter’s value is useful, we have to acknowledge that other plausible values exist.
+
++ A confidence interval reports a *range* of values for the parameter that, within a stated level of “confidence”, can be expected to contain the true value.
+
++ A hypothesis test assesses whether an observed estimate (or **statistic**, a number computed from data) of $\hat{p} = 0.5625$ is “significantly” different from what would be expected if were really equal to 0.50.
+
+`r ns(dt)`
+
+#  Other Methods of Point Estimation 
+
++ Maximum likelihood is just one method for estimating a parameter. It is **parametric** in the sense that it relies on a probability model that can be indexed by a finite number of parameters. But what if we get the model wrong?
+
++ There are several other methods available, some of which can be classified as **nonparametric**  in the sense that they do not rely on a given probability model.
+
++ Maximum likelihood estimates enjoy many optimality properties, when the model is true . However, nonparametric alternatives are attractive because of their “robustness” to assumptions.
+
++ We will learn about some nonparametric approaches later.

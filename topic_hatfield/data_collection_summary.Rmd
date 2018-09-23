@@ -10,7 +10,10 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-doc_type <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+dt <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+set.seed(1)
+
+source("../slide_tools.R")
 ```
 
 # Topic Overview

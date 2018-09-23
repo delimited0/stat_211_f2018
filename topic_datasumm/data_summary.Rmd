@@ -1,0 +1,276 @@
+---
+title: 'Data Summary'
+author: STAT 211 - 509
+date: 2018/09/11
+output:
+  # tufte::tufte_handout: default
+  xaringan::moon_reader:
+    css: ["default", "tamu", "tamu-fonts"]
+  lib_dir: libs
+  nature:
+    highlightStyle: github
+    highlightLines: true
+    countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+dt <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+set.seed(1)
+
+source("../slide_tools.R")
+```
+
+# Descriptive statistics
+
++ We have a sample of data, drawn from some distribution
+
++ How to compute numerical summaries of the data?
+
++ How to visualize the data?
+
+`r ns(dt)`
+
+## Variables
+
++ **Variable**: any characteristic or quantity to be measured on units in a study
+
++ **Categorical variable**: places a unit into one of several categories
+
++ **Quantitative variable**: takes on numerical values
+
+
++ **Univariate**: data with one variable
++ **Bivariate**: data with two variables
++ **Multivariate**: data with three or more variables
+
+`r ns(dt)`
+
+## Example: US cereal
+
+```{r}
+dat <- MASS::UScereal
+str(MASS::UScereal)
+```
+
+`r ns(dt)`
+
+# Summarizing categorical variable
+
++ **Frequency**: number of times a value occurs in data
+
++ **Relative frequency**: proportion of data that has a value
+
+```{r}
+freqs <- table(dat$mfr)
+freqs
+props <- freqs / nrow(dat)
+props
+sum(props)
+```
+
+`r ns(dt)`
+
+## Bar chart
+
++ Compares frequencies
+
++ Unordered
+
+```{r fig.height=3}
+barplot(freqs, cex.axis = .7, cex.lab = .7, cex = .7)
+```
+
+`r ns(dt)`
+
+# Summarizing quantitative variable
+
++ What is the typical value of the variable?
+
++ What is the spread of the variable?
+
+`r ns(dt)`
+
+## Histogram
+
++ **Histogram**: bar graph of binned data where height of bar above each bin 
+  denotes frequency or relative frequency of values in the bin
+  
+```{r fig.height=3}
+hist(dat$calories, cex.axis = .7, cex.lab = .7, cex.main = .7)
+```
+
+`r ns(dt)`
+
++ Need to choose number of bins among which we divide the $n$ data points
+
++ General rule: number of bins $\approx \sqrt{n}$
+
++ `breaks` argument in `hist()`. Can be a string that specifies a built in algorithm
+  for binning. Good default is "FD", for Freedman-Diaconis rule
+
+`r ns(dt)`
+
+## Breaks example  
+  
++ Data drawn from a distribution with two modes
+
+```{r fig.height=3}
+set.seed(1)
+z <- rbinom(20000, 1, .5) + 1
+means <- c(-1, 1)
+x <- rnorm(20000, mean = means[z], .7)
+par(mfrow = c(1, 2))
+hist(x, main = "Sturges", cex.main = .7, cex.axis = .7, cex.lab = .7)
+hist(x, breaks = "FD", main = "Freedman-Diaconis", cex.main = .7, cex.axis = .7, cex.lab = .7)
+```
+
+## The shape of quantitative data
+
++ **Symmetric** data is mirrored about each side of a center value
+
+```{r echo=FALSE, fig.height=3}
+hist(rnorm(1000), breaks = "FD", main = NULL, cex.axis = .7, cex.lab = .7)
+```
+
+`r ns(dt)`
+
++ **Skewed** data has one side much longer than the other
+
+```{r echo=FALSE, fig.height=3}
+hist(rchisq(1000, df = 5), breaks = "FD", main = "Right skewed data", 
+     cex.main = .7, cex.axis = .7, cex.lab = .7)
+```
+
+`r ns(dt)`
+
++ The **mode** is the peak value of the distribution
+
++ **Multimodal** data has multiple modes
+
+```{r echo=FALSE, fig.height=3}
+hist(x, breaks = "FD", main = "Bimodal data", cex.main = .7, cex.axis = .7, cex.lab = .7)
+```
+
+`r ns(dt)`
+
++ **Outliers** are data points "far" from most other data
+
++ Determination of outliers is subjective
+
++ *Do not* remove outliers if you don't know for sure that the data is erroneous
+
+```{r echo=FALSE, fig.height=3}
+x <- c(rnorm(100), 10, -20)
+hist(x, breaks = "FD", main = "Data with outliers", cex.main = .7, cex.axis = .7, cex.lab = .7)
+```
+
+`r ns(dt)`
+
+# Summary statistics for quantitative data
+
+`r ns(dt)`
+
+## Measures of central tendency
+
++ **Sample median**: value separating lower 50% of data from upper 50% of sample
+    - For finite set of numbers, the middle value
+    - If even number of values, then mean of middle two numbers
+
++ **Sample mean**: Given sample values $x_1, \ldots, x_n$, 
+
+  $$\bar{x} = \frac{1}{n}\sum_{i=1}^nx_i$$
+
+```{r}
+mean(dat$calories)
+```
+
+`r ns(dt)`
+
+## Percentiles
+
++ **Percentile**: the $p$th percentile is the value such that $p \times 100\%$ 
+  of sample data is below it and $(1-p)\times 100\%$ are above it.
+  
+  - **First quartile (Q1)** is 25th percentile
+  - **Second quartile (Q2)** is 50th percentile
+  - **Third quartile (Q3)** is 75th percentile
+  
++ **Five-number summary**
+
+```{r}
+fivenum(dat$calories)
+summary(dat$calories)
+```
+
+`r ns(dt)`
+
+## Boxplot
+
++ Visualize the 5 number summary
+
++ In R: `boxplot()`
+
++ **Interquartile range**: $IQR = Q3 - Q1$
+
++ Outliers: values greater than $Q3 + IQR$ or less than $Q1 - IQR$ are represented
+  with a point
+
+```{r echo=FALSE, fig.height=3}
+boxplot(dat$calories, horizontal = TRUE, main = "Calories data", cex = .7, 
+        cex.main = .7, cex.axis = .7)
+text(x = min(dat$calories), y = 1.15, labels = "Min", cex = .7)
+text(x = 110, y = 1.25, labels = "Q1", cex = .7)
+text(x = 180, y = 1.25, labels = "Q3", cex = .7)
+text(x = 135, y = 1.25, labels = "Q2", cex = .7)
+text(x = 400, y = 1.15, labels = "Outliers", cex = .7)
+```
+
+`r ns(dt)`
+
+## Measures of spread
+
+- **IQR**: $Q3 - Q1$, the range of the middle 50% of the data
+
+- **Sample variance, $s^2$**: sum of squared deviations from the mean divided by $n-1$:
+
+  $$s^2 = \frac{1}{n-1}\sum_{i=1}^n(x_i - \bar{x})^2$$
+  
+- **Sample standard deviation, s**: square root of sample variance. Has same units
+  as data
+  
+```{r}
+var(dat$calories)
+sd(dat$calories)
+```
+
+`r ns(dt)`
+
+## Choosing measure of central tendency and spread
+
++ Sample mean and sample standard deviation good for symmetric data
+
++ For skewed data or data with outliers, sample median and interquartile range
+  may be more appropriate
+
+`r ns(dt)`
+
+```{r echo=FALSE, fig.height=3}
+set.seed(1)
+x <- rnorm(100)
+plot(density(x), cex.main = .7, cex.axis = .7, cex.lab = .7, main = "")
+abline(v = mean(x), lwd = 3)
+abline(v = mean(x) + sd(x), lwd = 3, lty = 3)
+abline(v = mean(x) - sd(x), lwd = 3, lty = 3)
+legend("topleft", legend = c("Mean", "plus/minus 1 sd"), lty = c(1, 3), lwd = 3,
+       cex = .5)
+```
+
+```{r echo=FALSE, fig.height=3}
+set.seed(1)
+x <- c(rexp(100, rate = 1), 15:25)
+plot(density(x), cex.main = .7, cex.axis = .7, cex.lab = .7, main = "")
+abline(v = mean(x), lwd = 3, lty = 1)
+abline(v = median(x), lwd = 3, lty = 3)
+legend("topright", legend = c("Mean", "Median"), lty = c(1, 3), lwd = 3, cex = .5)
+```
