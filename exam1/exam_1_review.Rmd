@@ -1,0 +1,374 @@
+---
+title: "Exam 1 Review"
+author: "Patrick Ding"
+date: "9/30/2018"
+header-includes:
+   - \usepackage{tikz}
+   - \usetikzlibrary{shapes.geometric,arrows}
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(1)
+```
+
+## 1
+
+```{r echo=FALSE, fig.height=6}
+create_cdf <- function(n,p,main=""){
+  x <- 0:n
+  DD <- x
+  PP <- dbinom(x,n,p)
+  QQ <- cumsum(PP)
+  ## find x range for plotting (a little wider than min/max DD)
+    xlims <- range(DD)
+    slack <- .2*(xlims[2] - xlims[1])
+    xlims[1] <- xlims[1] - slack
+    xlims[2] <- xlims[2] + slack
+    ## make plot
+    par(mar=c(4.5,4.5,2,1))
+    plot(c(0,0),xlim=xlims,ylim=c(0,1),ylab="F(x)",col=0,xlab="x",cex.axis=1.5,cex.lab=1.5,main=main,cex.main=2)
+    segments(c(DD[1]-slack,DD),c(0,QQ),c(DD,DD[length(DD)]+slack),c(0,QQ),lwd=2)
+    points(DD,c(0,QQ[1:(length(QQ)-1)]),lwd=2, cex=1.5)
+    points(DD,QQ,pch=19,lwd=2, cex=1.5)
+    box(which="figure")
+}
+params <- as.matrix(expand.grid(c(3,5),c(.1,.5,.9)))
+to.use <- sample(1:6,5)
+params <- params[to.use,]
+truth <- sample(1:5,1)
+others <- setdiff(1:5,truth)
+
+par(mfrow=c(3,2))
+for(ii in 1:5){
+  create_cdf(params[ii,1],params[ii,2],paste("Plot ",ii,sep=""))
+}
+```
+
+Which of the above plots is the cumulative distribution function for 
+$X \sim Binomial(n=`r params[truth,1]`,p=`r params[truth,2]`)$?
+
+## 2
+
+If $B\subset A$, then $P(A\cup B)$ is
+\begin{enumerate}
+  \item[a)] $P(A)$
+  \item[b)] $P(A)-P(A\cap B)$
+  \item[c)] $P(A|B)$
+  \item[d)] 1
+  \item[e)] 0
+\end{enumerate}
+
+## 3
+
+A plane has 4 engines. Let $X$ represent the number of engines that
+ are working at any point in time. Consider the probability model shown below for $X$:
+\begin{center}
+  \begin{tabular}{l ll ll l}
+    $X$        &	0       &	1&	2&	3&	4\\
+    \hline
+    Probability&	0.23    &0.27    &   0.11&   0.05&    0.34\\
+  \end{tabular}
+\end{center}
+What is the expected number of engines that are working at any point in time?  
+\begin{enumerate}
+  \item[a)] 0.4
+  \item[b)] 0.5 
+  \item[c)] 1.5
+  \item[d)] 2 
+  \item[e)] 2.23 
+\end{enumerate}
+
+## 4
+
+On an exam, the probability that a particular student will make a mistake on
+any single question is 0.25. If there are 8 questions, and the
+student's answers are mutually independent of each other, then the
+probability that the student makes exactly two mistakes is
+\begin{enumerate}
+\item[a)] $\sum_{x=0}^2{8\choose x}(.25)^x(.75)^{8-x}$
+\item[b)] $.689$
+\item[c)] $.311$
+\item[d)] $\sum_{x=2}^8{8\choose x}(.25)^x(.75)^{8-x}$
+\item[e)] 1, since 2 is the expected value in this case
+\end{enumerate}
+
+*****
+
+The probability mass function of the random variable $X$ is:
+\begin{center}
+  \begin{tabular}{|l| l|}
+    \hline
+    $x$        &  $f_X$\\
+    \hline
+    0 & 0.2\\
+    1 & 0.8\\
+    \hline
+  \end{tabular}
+\end{center}
+Use this table to answer the next \textbf{two questions}.
+
+## 5
+
+What is $E[X]$?
+\begin{enumerate}
+  \item[a)] 0.8
+  \item[b)] 0.16
+  \item[c)] 1.0
+  \item[d)] 0.5
+  \item[e)] 0.64
+\end{enumerate}
+
+## 6
+
+What is $Var(X)$?
+\begin{enumerate}
+  \item[a)] 0.20
+  \item[b)] 0.16
+  \item[c)] 0.10
+  \item[d)] 0.25
+  \item[e)] 0.64
+\end{enumerate}
+
+*****
+
+A test has 20 questions with 5 possible answers each. A student who
+has not studied at all decides to randomly guess an answer for each
+question (with equal probability for each of the five answer
+choices). Answer the following \textbf{three questions}. 
+
+## 7
+
+What is the expected number of correct answers?
+\begin{enumerate} 
+\item[a)] 3
+\item[b)] 4
+\item[c)] 5
+\item[d)] 6
+\item[e)] 7
+\end{enumerate}
+
+## 8
+
+What is the standard deviation of the number of correct answers?
+\begin{enumerate} 
+\item[a)] 1.8
+\item[b)] 4
+\item[c)] 3.2
+\item[d)] 2
+\item[e)] 10
+\end{enumerate}
+
+## 9
+
+What is the probability that the student gets more than one answer correct on the test?
+\begin{enumerate} 
+\item[a)] 0.07
+\item[b)] 0.25
+\item[c)] 0.75
+\item[d)] 0.93
+\item[e)] 0.97
+\end{enumerate}
+
+*****
+
+In a batch of voltage regulators, 60\% came from supplier 1, 30\% from supplier 2 and 10\% from supplier 3.
+\begin{itemize}
+  \item 95\% of regulators from supplier 1 work
+  \item 80\% of regulators from supplier 2 work
+  \item 65\% of regulators from supplier 3 work
+\end{itemize}
+Use this information to answer the following \textbf{two questions}.
+
+## 10
+
+What is the probability a randomly selected regulator from the batch works?
+\begin{enumerate}
+\item[a)] 0.667
+\item[b)] 0.875
+\item[c)] 0.615
+\item[d)] 0.125
+\item[e)] 0.960
+\end{enumerate}
+
+## 11
+
+If a randomly selected regulator from the batch works, what is the probability it came from supplier 3?
+\begin{enumerate}
+\item[a)] 0.65
+\item[b)] 0.10
+\item[c)] 0.05
+\item[d)] 0.50
+\item[e)] 0.07  %%CCR
+\end{enumerate}
+
+*****
+
+## 12
+
+Consider randomly selecting a student at TAMU.  Let $A$ denote the event
+that the student has a MasterCard and $B$ denote the event that the
+student has a Visa card.  Suppose that $P(A)=0.5$, $P(B)=0.6$, and
+$P(A\cap B)=0.4$.  The probability that a randomly selected student 
+at TAMU has exactly one of the two types of cards is
+
+\begin{enumerate}
+\item[a)]  0.3
+\item[b)]  0.7
+\item[c)]  0.1
+\item[d)]  0.4
+\item[e)]  0.2
+\end{enumerate}
+
+## 13
+
+A discrete rv $X$ has a pmf given by
+$$
+p(x)=\begin{cases} C(x+1),&$x=0,1,2,3$ \\
+            0,&otherwise.\end{cases}
+$$
+The value of $C$ that makes $p(x)$ a pmf is
+\begin{enumerate}
+\item[a)]  ${10}$
+\item[b)]  ${1\over 6}$
+\item[c)]  $1 \over 10$
+\item[d)]  ${6}$
+\item[e)]  ${1 \over 30}$
+\end{enumerate}
+
+## 14
+
+Suppose that $X$ is a discrete rv with $E(X)=5$ and $V(X)=10$.  Suppose
+that $Y=5X-2$.  Then the mean and variance of $Y$ are
+\begin{enumerate}
+\item[a)]  $E(Y)=23,\ V(Y)=250$
+\item[b)]  $E(Y)=23,\ V(Y)=15.811$
+\item[c)]  $E(Y)=23,\ V(Y)=50$
+\item[d)]  $E(Y)=23,\ V(Y)=246$
+\item[e)]  $E(Y)=23,\ V(Y)=48$
+\end{enumerate}
+
+## 15
+
+Suppose $X \sim Binomial(10, .72)$. Which of the following would compute 
+$P(X = 9)$ in R?
+
+\begin{enumerate}
+\item[a)]  rbinom(n = 10, size = 10, prob = .72)
+\item[b)]  pbinom(q = 9, size = 10, prob = .72)
+\item[c)]  dbinom(x = 9, size = 9, prob = .72)
+\item[d)]  dbinom(x = 10, size = 9, prob = .72)
+\item[e)]  dbinom(x = 9, size = 10, prob = .72)
+\end{enumerate}
+
+## 16
+
+Suppose $W \sim Binomial(10, .3)$. Which of the following would compute
+$P(3 \le W < 8)$ in R?
+
+\begin{enumerate}
+\item[a)] pbinom(q = 8, size = 10, prob = .3) - pbinom(q = 3, size = 10, prob = .3)
+\item[b)] dbinom(x = 3:7, size = 10, prob = .3)
+\item[c)] pbinom(q = 7, size = 10, prob = .3) - pbinom(q = 2, size = 10, prob = .3)
+\item[d)] pbinom(q = 7, size = 10, prob = .3)
+\item[e)] sum(dbinom(x = 3:8, size = 10, prob = .3))
+\end{enumerate}
+
+*****
+
+Consider $x_1, \ldots, x_n \sim iid \; geometric(\gamma)$, where the pmf is 
+$$f_\gamma(x_i) = (1-\gamma)^{x_i-1}\gamma$$
+and $x =  1, 2, \ldots$, $0<\gamma<1$. Answer the following \textbf{two questions}. 
+
+## 17
+
+You construct the likelihood function by multiplying the pmfs evaluated at the 
+data together: $\prod_{i=1}^n f_\gamma(x_i)$. So the likelihood function is of 
+the form: $L(\gamma) = (1-\gamma)^A\gamma^B$. What is $A$ and $B$?
+
+\begin{enumerate}
+\item[a)] $A = x_1, \quad B = 1$
+\item[b)] $A = \sum_{i=1}^n x_i - n, \quad B = 1$
+\item[c)] $A = \prod_{i=1}^n x_i, \quad B = n$
+\item[d)] $A = \sum_{i=1}^n x_i - n, \quad B = n$
+\item[e)] $A = \sum_{i=1}^n x_i - 1, \quad B = n$
+\end{enumerate}
+
+## 18
+
+What is the maximum likelihood estimate of $p$?
+
+\begin{enumerate}
+\item[a)] $\hat{p} = \frac{A}{B}$
+\item[b)] $\hat{p} = \frac{A}{B} + 1$ 
+\item[c)] $\hat{p} = \big(\frac{A}{B} - 1\big)^{-1}$ 
+\item[d)] $\hat{p} = \big(\frac{A}{B} + 1\big)^{-1}$ 
+\item[e)] $\hat{p} = A + B$
+\end{enumerate}
+
+*****
+
+Consider the following joint probability distribution:
+
+|             | X = -2             | X = 2               |
+| :---------- |:-------------:   | :-----:               |
+| Y = 3      |  .3               |  .1                   |
+| Y = 4      |  .4               | .2                     |
+
+Answer the following \textbf{two questions}. 
+
+## 19
+
+What is the marginal PMF of $X$?
+
+\begin{enumerate}
+\item[a)] 
+  $$f_X(x) = \begin{cases} .3 & x = -2 \\ .1 & x = 2 \end{cases}$$
+\item[b)] 
+  $$f_X(x) = \begin{cases} .4 & x = -2 \\ .2 & x = 2 \end{cases}$$
+\item[c)] 
+  $$f_X(x) = \begin{cases} .7 & x = -2 \\ .3 & x = 2 \end{cases}$$
+\item[d)] 
+  $$f_X(x) = \begin{cases} .3 & x = -2 \\ .7 & x = 2 \end{cases}$$
+\item[e)] 
+  $$f_X(x) = \begin{cases} .4 & x = -2 \\ .6 & x = 2 \end{cases}$$
+\end{enumerate}
+
+## 20
+
+What is $E[Y|X = 2]$?
+
+\begin{enumerate}
+\item[a)] $\frac{1}{3}$
+\item[b)] $\frac{11}{3}$ 
+\item[c)] $\frac{2}{3}$ 
+\item[d)] $\frac{25}{7}$ 
+\item[e)] $\frac{1}{4}$
+\end{enumerate}
+
+## Solutions
+
+1. Plot `r truth`
+2. a: $P(A)$
+3. d: 2
+4. c: .311
+5. a: 0.8
+6. b: 0.16
+7. b: 4. If $X$ is the number of correct answers (guesses), then $X \sim Binomial(n=20,p=1/5)$. Therefore, $E(X) = np = 4$
+8. a: 1.8. $Var(X) = np(1-p) = 20(1/5)(4/5) = 3.2 \Rightarrow sd(X) = \sqrt{3.2} = 1.8$
+9. d: 0.93. $P(X>1) = 1-\Big(P(X=0) + P(X=1)\Big) = 1-\Big(\binom{20}{0} (1/5)^0(4/5)^{20} + \binom{20}{1} (1/5)^1(4/5)^{19}\Big) = 0.93$
+10. b: $0.875 = .6\times.95 + .3\times.8 + .1\times.65$
+11. e: $0.07 = (.1\times .65) / .875$
+12. a: 0.3
+13. c: $1 \over 10$
+14. a: $E(Y)=23,\ V(Y)=250$ 
+15. e: dbinom(x = 9, n = 10, p = .72)
+16. c: pbinom(q = 7, size = 10, prob = .3) - pbinom(q = 2, size = 10, prob = .3)
+17. d: $A = \sum_{i=1}^n x_i - n, \quad B = n$
+18. d: $\hat{p} = \big(\frac{A}{B} + 1\big)^{-1}$ 
+19. c: $f_X(x) = \begin{cases} .7 & x = -2 \\ .3 & x = 2 \end{cases}$
+20. b: $\frac{11}{3}$ 
+
+
+

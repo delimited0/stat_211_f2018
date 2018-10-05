@@ -1,0 +1,565 @@
+---
+title: "Exam 1"
+author: "STAT 211 - 509"
+date: "10-4-2018"
+output: pdf_document
+params:
+  seed: 1
+  key: TRUE
+subtitle: "Version `r params$seed`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(digits = 4)
+
+# VERSION A
+set.seed(params$seed)
+
+# VERSION B
+# set.seed(2)
+
+answer <- function(ans, choices) {
+  paste0("SOLUTION: ", letters[which(ans == choices)])
+}
+
+answer_list <- function(ans, choices) {
+  paste0("SOLUTION: ", letters[which(sapply(choices, function(e) all(e == ans)))])
+}
+```
+
+
+# Name: _____________________
+
+Please sign the following pledge and read all instructions carefully before starting the exam.
+
+Pledge: I have neither given nor received any unauthorized aid in completing this exam, and I have conducted myself within the guidelines of the University Honor Code.
+Signature: ________________________
+
+# Instructions
+
++ This test has 15 multiple choice problems. Record all answers on your large 
+  Scantron with the appropriate pencil.
++ Total time is 75 minutes (12:45 P.M to 2:00 P.M.).
++ You are permitted one 8.5in by 11in cheatsheet and a calculator. No other 
+  resources (phones, laptop, tablet, etc.) are allowed. 
++ If you are wearing a hat and/or smartwatch, please remove them while taking the
+  test.
++ There is no penalty for incorrect answers; have an answer for every question.
++ When you are done, turn in your cheatsheet and exam booklet along with the Scantron.
+
+\newpage
+
+```{r echo=FALSE, results='hide'}
+q1_soln <- "a + 4b"
+q1_vec <- sample(c(
+  q1_soln,
+  "a + b",
+  "a + 8b",
+  "2a + 4b",
+  "2a + b"
+))
+
+q2_soln <- "$a^2 + 2b^2$"
+q2_vec <- sample(c(
+  q2_soln,
+  "$a^2 + b^2$",
+  "$a^2 + 4b^2$",
+  "$2b^2$",
+  "$a^2$" 
+))
+
+q3_soln <- "$a^2 + 2b^2 + (a + 4b)^2$"
+q3_vec <- sample(c(
+  q3_soln,
+  "$(a+4b)^2$",
+  "$a^2 + 2b^2 - (a + 4b)^2$",
+  "$a^2 + 2b^2 + a + 4b$",
+  "$a^2 + 2b^2 - a - 4b$"
+))
+```
+
+Let $X \sim Poisson(1)$ and $Y \sim Binomial(8, 1/2)$. Assume that $X$ and $Y$
+are independent. Answer the following **three** questions:
+
+## Question 1
+
+What is $E[aX + bY]$?
+ 
+\begin{enumerate}
+  \item[a)] `r q1_vec[1]`
+  \item[b)] `r q1_vec[2]`
+  \item[c)] `r q1_vec[3]`
+  \item[d)] `r q1_vec[4]`
+  \item[e)] `r q1_vec[5]`
+\end{enumerate}
+
+`r if (params$key) answer(q1_soln, q1_vec)`
+
+## Question 2
+
+What is $Var(aX + bY)$?
+
+\begin{enumerate}
+  \item[a)] `r q2_vec[1]`
+  \item[b)] `r q2_vec[2]`
+  \item[c)] `r q2_vec[3]`
+  \item[d)] `r q2_vec[4]`
+  \item[e)] `r q2_vec[5]`
+\end{enumerate}
+
+`r if (params$key) answer(q2_soln, q2_vec)`
+
+## Question 3
+
+What is $E[(aX + bY)^2]$?
+
+\begin{enumerate}
+  \item[a)] `r q3_vec[1]`
+  \item[b)] `r q3_vec[2]`
+  \item[c)] `r q3_vec[3]`
+  \item[d)] `r q3_vec[4]`
+  \item[e)] `r q3_vec[5]`
+\end{enumerate}
+
+`r if (params$key) answer(q3_soln, q3_vec)`
+
+*****
+
+\newpage
+
+## Question 4
+
+```{r echo=FALSE, results='hide'}
+p_L <- sample(seq(.1, .4), size = 1)
+p_T <- sample(seq(.3, .5), size = 1)
+p_LUT <- p_L + p_T
+
+q4_vec <- sample(list(
+  p_LUT,
+  p_L * p_T,
+  (1 - p_L) * p_T,
+  "Can't answer without knowing $P(A \\cap B)$",
+  p_LUT + .05
+))
+```
+
+Let $L$ be the event that your bus is late and $T$ be the event that it is on time.
+Suppose $P(L) = `r p_L`$ and $P(T) = `r p_T`$. What is $P(L \cup T)$?
+
+\begin{enumerate}
+  \item[a)] `r q4_vec[1]`
+  \item[b)] `r q4_vec[2]`
+  \item[c)] `r q4_vec[3]`
+  \item[d)] `r q4_vec[4]`
+  \item[e)] `r q4_vec[5]`
+\end{enumerate}
+
+`r if (params$key) answer(p_LUT, q4_vec)`
+
+*****
+
+## Question 5
+
+```{r echo=FALSE, results='hide'}
+q5_soln <- "P(B)"
+q5_vec <- sample(list(
+  q5_soln,
+  "P(A)",
+  1,
+  0,
+  "P(A) + P(B)"
+))
+```
+
+Suppose for two events $A$ and $B$ we have that $B \subset A$, meaning $B$ is completely contained 
+in $A$. This means every outcome in $B$ is also in $A$. Then $P(A \cap B)$ is:
+
+*Hint: draw a Venn diagram. For an example of an event completely contained in 
+another, let $P$ be the event you pass this exam and $A$ be the event you get an A.
+$A \subset P$, since all the scores you get that lead to an A also lead to you passing.*
+
+\begin{enumerate}
+  \item[a)] `r q5_vec[1]`
+  \item[b)] `r q5_vec[2]`
+  \item[c)] `r q5_vec[3]`
+  \item[d)] `r q5_vec[4]`
+  \item[e)] `r q5_vec[5]`
+\end{enumerate}
+
+`r if (params$key) answer(q5_soln, q5_vec)`
+
+*****
+
+\newpage
+
+```{r echo=FALSE, results='hide'}
+prior <- sample(seq(.01, .08, .01), size = 1)
+pos_given_sick <- sample(seq(.92, .98, .01), size = 1)
+pos_given_healthy <- sample(seq(.04, .1, .01), size = 1)
+
+pos <- pos_given_sick * prior + pos_given_healthy * (1 - prior)
+post <- pos_given_sick * prior / pos
+
+q6_vec <- sample(c(
+  pos,
+  prior,
+  pos_given_sick * prior,
+  pos_given_healthy * (1 - prior),
+  1
+))
+
+q7_vec <- sample(c(
+  post,
+  pos_given_sick,
+  prior,
+  pos_given_healthy,
+  pos_given_sick * prior
+))
+```
+
+`r prior*100`\% of a population is infected with HIV. For a certain HIV test there is
+a `r pos_given_sick*100`\% chance the test will be positive given that the tested
+individual is actually infected with HIV. If the person is not infected, there is a 
+`r pos_given_healthy*100`\% chance the test will be positive. Answer the following
+**two** questions.
+
+## Question 6
+
+What is the probability that the test is positive for a randomly selected person 
+from the population?
+
+\begin{enumerate}
+  \item[a)] `r q6_vec[1]`
+  \item[b)] `r q6_vec[2]`
+  \item[c)] `r q6_vec[3]`
+  \item[d)] `r q6_vec[4]`
+  \item[e)] `r q6_vec[5]`
+\end{enumerate}
+
+`r if (params$key) answer(pos, q6_vec)`
+
+## Question 7
+
+If a randomly selected person from the population is tested positive, what is 
+the probability that the person is actually infected?
+
+\begin{enumerate}
+  \item[a)] `r q7_vec[1]`
+  \item[b)] `r q7_vec[2]`
+  \item[c)] `r q7_vec[3]`
+  \item[d)] `r q7_vec[4]`
+  \item[e)] `r q7_vec[5]`
+\end{enumerate}
+
+`r if (params$key) answer(post, q7_vec)`
+
+*****
+
+\newpage
+
+```{r binomial, echo=FALSE, results='hide'}
+prob <- sample(seq(.2, .8, .1), size = 1)
+
+q9_ans <- paste0("pbinom(q = 2, size = 4, prob = ", prob, ")")
+q9_vec <- sample(c(
+  q9_ans,
+  paste0("dbinom(x = 2, size = 4, prob = ", prob, ")"),
+  paste0("pbinom(q = 2, size = 3, prob = ", prob+.2, ")"),
+  paste0("rbinom(n = 2, size = 4, prob = ", prob, ")"),
+  paste0("pgeom(q = 2, prob = ", prob, ")")
+))
+
+q10_ans <- 1 - (1-prob)^4
+q10_vec <- sample(c(
+  q10_ans,
+  (1-prob)^4,
+  dbinom(1, 4, prob),
+  dbinom(2, 4, prob),
+  sum(dbinom(1:3, 4, prob))
+))
+```
+
+Let $X \sim Binomial(n = 4, p = `r prob`)$. Answer the following **three** questions.
+
+## Question 8
+
+Which of the following plots is of the pmf for $X$? The $y$ axis is $f(x)$ for each plot.
+
+```{r echo=FALSE, fig.height = 5}
+par(mfrow = c(3, 2), oma = c(5,4,0,0) + 0.1, mar = c(0,0,4,3) + 0.1)
+plot(0:4, dbinom(0:4, 4, prob), type = "h", lwd = 2, ylab = "f(x)", xlab = "x") 
+title(main = "Plot 1", line = 0.1)
+plot(0:8, dbinom(0:8, 8, prob), type = "h", lwd = 2, ylab = "f(x)", xlab = "x")
+title(main = "Plot 2", line = 0.1)
+plot(0:4, rep(1/5, 5), type = "h", lwd = 2, ylab = "f(x)", xlab = "x") 
+title(main = "Plot 3", line = 0.1)
+plot(0:4, 3*dbinom(0:4, 4, prob), type = "h", lwd = 2, ylab = "f(x)", xlab = "x")
+title(main = "Plot 4", line = 0.1)
+plot(0:3, dbinom(0:3, 3, prob), type = "h", lwd = 2, ylab = "f(x)", xlab = "x") 
+title(main = "Plot 5", line = 0.1)
+```
+
+\begin{enumerate}
+  \item[a)] Plot 1
+  \item[b)] Plot 2
+  \item[c)] Plot 3
+  \item[d)] Plot 4
+  \item[e)] Plot 5
+\end{enumerate}
+
+`r if (params$key) paste0("SOLUTION: a")`
+
+## Question 9
+
+Which of the following correctly computes $P(X \le 2)$ in R?
+
+\begin{enumerate}
+  \item[a)] `r q9_vec[1]`
+  \item[b)] `r q9_vec[2]`
+  \item[c)] `r q9_vec[3]`
+  \item[d)] `r q9_vec[4]`
+  \item[e)] `r q9_vec[5]`
+\end{enumerate}
+
+`r if (params$key) answer(q9_ans, q9_vec)`
+
+## Question 10
+
+What is $P(X \ge 1)$?
+
+\begin{enumerate}
+  \item[a)] `r q10_vec[1]`
+  \item[b)] `r q10_vec[2]`
+  \item[c)] `r q10_vec[3]`
+  \item[d)] `r q10_vec[4]`
+  \item[e)] `r q10_vec[5]`
+\end{enumerate}
+
+`r if (params$key) answer(q10_ans, q10_vec)`
+
+*****
+
+Let $X \sim Binomial(N, p)$, where $N \sim Poisson(\lambda)$. Note that $N$ is a
+random variable, not a number. Answer the following **two** questions.
+
+```{r law_of_tot_expec, echo=FALSE}
+q11_ans <- "$np$"
+q11_vec <- sample(c(
+  q11_ans,
+  "$Np$",
+  "$p$",
+  "$n$",
+  "$N$"
+))
+
+q12_ans <- "$ \\lambda p$"
+q12_vec <- sample(c(
+  q12_ans,
+  "$np$",
+  "$Np$",
+  "$ \\lambda$",
+  "$n \\lambda$"
+))
+```
+
+## Question 11
+
+What is $E[X|N = n]$? 
+
+*Hint: read this as, if $N$ were not a random variable but an integer $n$, then
+ what is the mean of $X$?*
+ 
+\begin{enumerate}
+  \item[a)] `r q11_vec[1]`
+  \item[b)] `r q11_vec[2]`
+  \item[c)] `r q11_vec[3]`
+  \item[d)] `r q11_vec[4]`
+  \item[e)] `r q11_vec[5]`
+\end{enumerate}
+
+`r if (params$key) answer(q11_ans, q11_vec)`
+
+## Question 12
+
+What is $E[X]$?
+
+*Hint: use the law of total expectation. For random variables $A$ and $B$, 
+$E[A] = \sum_b E[A|B=b]P(B=b)$.*
+
+\begin{enumerate}
+  \item[a)] `r q12_vec[1]`
+  \item[b)] `r q12_vec[2]`
+  \item[c)] `r q12_vec[3]`
+  \item[d)] `r q12_vec[4]`
+  \item[e)] `r q12_vec[5]`
+\end{enumerate}
+
+`r if (params$key) answer(q12_ans, q12_vec)`
+
+*****
+
+\newpage
+
+```{r joint table, echo=FALSE, results='hide'}
+table_prob <- sample(c(.1, .1, .2, .4, .1, .1))
+
+y_pmf <- c(table_prob[1] + table_prob[4],
+           table_prob[2] + table_prob[5],
+           table_prob[3] + table_prob[6])
+
+q13_denom <- sum(table_prob[1:3])
+q13_ans <- table_prob[1:3] / q13_denom
+q13_vec <- sample(list(
+  q13_ans,
+  table_prob[1:3],
+  table_prob[4:6],
+  table_prob[4:6] / sum(table_prob[4:6]),
+  y_pmf
+))
+
+q14_ans <- sum((table_prob[1:3] / q13_denom) * (-3:-1))
+q14_vec <- sample(c(
+  q14_ans,
+  sum(table_prob[1:3] * (-3:-1)),
+  sum(table_prob[4:6] * (-3:-1)),
+  sum((table_prob[4:6] / q13_denom) * (-3:-1)),
+  sum(y_pmf * (-3:-1))
+))
+```
+
+Consider the following joint probability distribution:
+
+|             | X = 0             | X = 1                   |
+| :---------- |:-------------:    | :-----:                 |
+| Y = -3      | `r table_prob[1]` | `r table_prob[4]`       |
+| Y = -2      | `r table_prob[2]` | `r table_prob[5]`       |
+| Y = -1      | `r table_prob[3]` | `r table_prob[6]`       |
+
+Answer the following **two** questions.
+
+## Question 13
+
+What is the conditional distribution of $Y$ given $X=0$, $f_{Y|X}(y)$?
+
+\begin{enumerate}
+  \item[a)] 
+    $$
+    \begin{aligned}
+        f_{Y|X}(y) &= \begin{cases}
+          `r q13_vec[[1]][1]`, & y = -3 \\
+          `r q13_vec[[1]][2]`, & y = -2  \\
+          `r q13_vec[[1]][3]`, & y = -1  \\
+          0, & \text{otherwise}
+        \end{cases}
+    \end{aligned}
+    $$
+  \item[b)] 
+    $$
+    \begin{aligned}
+        f_{Y|X}(y) &= \begin{cases}
+          `r q13_vec[[2]][1]`, & y = -3 \\
+          `r q13_vec[[2]][2]`, & y = -2  \\
+          `r q13_vec[[2]][3]`, & y = -1  \\
+          0, & \text{otherwise}
+        \end{cases}
+    \end{aligned}
+    $$
+  \item[c)] 
+    $$
+    \begin{aligned}
+        f_{Y|X}(y) &= \begin{cases}
+          `r q13_vec[[3]][1]`, & y = -3 \\
+          `r q13_vec[[3]][2]`, & y = -2  \\
+          `r q13_vec[[3]][3]`, & y = -1  \\
+          0, & \text{otherwise}
+        \end{cases}
+    \end{aligned}
+    $$
+  \item[d)]
+    $$
+    \begin{aligned}
+        f_{Y|X}(y) &= \begin{cases}
+          `r q13_vec[[4]][1]`, & y = -3 \\
+          `r q13_vec[[4]][2]`, & y = -2  \\
+          `r q13_vec[[4]][3]`, & y = -1  \\
+          0, & \text{otherwise}
+        \end{cases}
+    \end{aligned}
+    $$
+  \item[e)]
+    $$
+    \begin{aligned}
+        f_{Y|X}(y) &= \begin{cases}
+          `r q13_vec[[5]][1]`, & y = -3 \\
+          `r q13_vec[[5]][2]`, & y = -2  \\
+          `r q13_vec[[5]][3]`, & y = -1  \\
+          0, & \text{otherwise}
+        \end{cases}
+    \end{aligned}
+    $$
+\end{enumerate}
+
+`r if (params$key) answer_list(q13_ans, q13_vec)`
+
+\newpage
+
+## Question 14
+
+What is $E[Y|X=0]?$
+
+\begin{enumerate}
+  \item[a)] `r q14_vec[1]`
+  \item[b)] `r q14_vec[2]`
+  \item[c)] `r q14_vec[3]`
+  \item[d)] `r q14_vec[4]`
+  \item[e)] `r q14_vec[5]`
+\end{enumerate}
+
+`r if (params$key) answer(q14_ans, q14_vec)`
+
+*****
+
+```{r likelihood, echo=FALSE, results='hide'}
+breakpoint <- sample(-2:2, size = 1)
+normmean <- breakpoint - 2
+
+q15_ans <- breakpoint
+q15_vec <- sample(c(
+  q15_ans,
+  normmean,
+  5,
+  -5,
+  breakpoint + 1
+))
+```
+
+## Question 15
+
+Suppose we have $X_1, \ldots, X_n \sim f_\rho$, an iid sample of random variables 
+from a discrete distribution with pmf $f_\rho(x)$ and parameter $\rho$. We 
+construct the likelihood function and plot it:
+
+```{r likelihood plot, echo=FALSE}
+xn_vals <- seq(-5, breakpoint, .01)
+xe_vals <- seq(breakpoint, 5, .01)
+plot(xn_vals, dnorm(xn_vals, normmean), type = 'l', xlim = c(-5, 5), ylim = c(0, 1.1),
+     xaxp = c(-5, 5, 10),
+     ylab = expression(paste("L(", rho, ")")), xlab = expression(rho))
+lines(xe_vals, dexp(xe_vals - breakpoint))
+points(breakpoint, dnorm(breakpoint, normmean), cex = 2)
+points(breakpoint, dexp(xe_vals[1] - breakpoint), cex = 2, pch = 19)
+```
+
+What is the maximum likelihood estimate for $\rho$?
+
+\begin{enumerate}
+  \item[a)] `r q15_vec[1]`
+  \item[b)] `r q15_vec[2]`
+  \item[c)] `r q15_vec[3]`
+  \item[d)] `r q15_vec[4]`
+  \item[e)] `r q15_vec[5]`
+\end{enumerate}
+
+`r if (params$key) answer(q15_ans, q15_vec)`
+
