@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Continuous Random Variables</title>
+    <meta charset="utf-8">
+    <meta name="author" content="STAT 211 - 509" />
+    <meta name="date" content="2018-10-14" />
+    <link href="chapter_7_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="chapter_7_files/remark-css-0.0.1/tamu.css" rel="stylesheet" />
+    <link href="chapter_7_files/remark-css-0.0.1/tamu-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Continuous Random Variables
+### STAT 211 - 509
+### 2018-10-14
+
+---
+
+
+
+
+
+#  Continuous Random Variables 
+
+Let `\(X\)` be a continuous random variable:
+
++ The **probability density function (pdf)** `\(f\)` is defined as
+
+`$$P(a &lt; X \le b) = \int_a^b f(x) dx, \quad a \le b$$`
+
++ The **cumulative distribution function (cdf)** `\(F\)` is defined as
+
+`$$F(x) = P(X \le x) = \int_{-\infty}^x f(x)dx$$`
+
++ At every point `\(x\)` at which `\(f(x)\)` is continuous,
+
+`$$F'(x) = f(x)$$`
+
+---
+
+&lt;img src="chapter_7_files/figure-html/unnamed-chunk-1-1.png" width="672" /&gt;
+
+---
+
++ Beta
+    + `\(f(x; \alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha - 1}(1 - x)^{\beta - 1}, \quad x \in [0, 1]\)`
+    + conjugate prior for binomial distribution parameter `\(p\)`
+    + In R: (d|p|q|r)beta
+    
+    &lt;img src="chapter_7_files/figure-html/unnamed-chunk-2-1.png" width="384" /&gt;
+
+---
+
++ Chi-square `\(\chi^2\)`
+    + `\(f(x; df),\quad x \in [0, \infty)\)`
+    + Chi-square test for goodness of fit
+    + In R: (d|p|q|r)chisq
+    
+    &lt;img src="chapter_7_files/figure-html/unnamed-chunk-3-1.png" width="384" /&gt;
+
+---
+
++ t
+    + `\(f(x; df), \quad x \in (-\infty, \infty)\)`
+    + t-test for difference in means
+    + In R: (d|p|q|r)t
+    
+    &lt;img src="chapter_7_files/figure-html/unnamed-chunk-4-1.png" width="384" /&gt;
+    
+---
+    
++ F
+    + `\(f(x; df1, df2), \quad x \in [0, \infty)\)`
+    + F-test for equality of means in ANOVA
+    + In R: (d|p|q|r)f
+    
+    &lt;img src="chapter_7_files/figure-html/unnamed-chunk-5-1.png" width="384" /&gt;
+
+---
+
+## Continuous distributions in R
+
+Suppose `\(X \sim \chi^2_2\)`. 
+
+`\(P(1 \le X \le 3)\)`:
+
+
+```r
+pchisq(3, 2) - pchisq(1, 2)
+```
+
+```
+## [1] 0.3834005
+```
+
+`\(f(3)\)`:
+
+
+```r
+dchisq(3, 2)
+```
+
+```
+## [1] 0.1115651
+```
+
+Sample 10 numbers from `\(X\)`:
+
+
+```r
+rchisq(10, 2)
+```
+
+```
+##  [1] 0.3102827 3.7648032 3.6090250 1.6723553 2.4450873 2.3167105 1.9800399
+##  [8] 0.6147466 0.1892382 0.3144031
+```
+
+
+
+---
+
+# Expected Values With Continuous RVs 
+
+Let `\(X\)` be a continuous random variable:
+
++ The expected value (*mean*) of `\(X\)` is
+
+`$$E[X] = \mu = \int_{-\infty}^\infty xf(x)dx$$`
+
++ The expected value of `\(g(X)\)` is
+
+`$$E[g(X)] = \int_{-\infty}^\infty g(x)f(x)dx$$`
+
++ The variance of `\(X\)` is
+
+`$$Var(X) = \sigma^2 = E[(X - \mu)^2] = E[X^2] - (E[X])^2$$`
+
++ The moment generating function of is
+
+`$$M(t) = E[e^{tX}] = \int_{-\infty}^{\infty} e^{tx}f(x)dx$$`
+
+---
+
+# Joint and Conditional Distributions 
+
+Let `\(X\)` and `\(Y\)` be continuous random variables with marginal pdfs `\(f_X\)` and `\(f_Y\)`
+and **joint probability density function** `\(f_{X,Y}\)`:
+
++ Joint probabilities are double integrals of the joint pdf:
+
+`$$P((X, Y) \in A) = \int\int_A f_{X,Y}(x, y)dxdy$$`
+
++ The **conditional probability density function** `\(f_{Y|X=x}(y|x)\)` of `\(Y\)` given 
+  that `\(X = x\)` is:
+
+`$$f_{Y|X=x}(y|x) = \frac{f_{X,Y}(x,y)}{f_X(x)}$$`
+
++ `\(X\)` and `\(Y\)` are **independent** if
+
+`$$f_{X,Y}(x,y) = f_X(x)f_Y(y)$$`
+
+---
+
+# The Normal Distribution 
+
+The random variable `\(X\)` has a Normal distribution with parameters `\(\mu\)` and `\(\sigma^2\)`
+(written `\(X \sim N(\mu, \sigma^2)\)`) if its pdf is
+
+$$ f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{1}{2\sigma^2}(x-\mu)^2} $$
+
++ `\(E[X] = \mu\)`, `\(Var(X) = \sigma^2\)`
+
++ Let `\(Z = \frac{X - \mu}{\sigma}\)`. Then `\(Z \sim N(0, 1)\)`.
+
++ The 68 / 95 / 99.7 rule:
+    + `\(P(-1 &lt; Z &lt; 1) \approx 0.68\)`
+    + `\(P(-2 &lt; Z &lt; 2) \approx 0.95\)`
+    + `\(P(-3 &lt; Z &lt; 3) \approx 0.997\)`
+
+---
+
+![](assets/img/image13.png)
+
+
+
+---
+
+## Bivariate normal
+
+If `\(X,Y\)` are bivariate normal, then:
+
+`$$f_{X,Y}(x,y) = \frac{1}{2\pi\sigma_X\sigma_Y\sqrt{1 - \rho^2}}
+  \exp\bigg(-\frac{1}{2(1-\rho^2)}\bigg[\frac{(x - \mu_X)^2}{\sigma_X^2} + 
+            \frac{(y - \mu_Y)^2}{\sigma_Y^2} - 
+            \frac{2\rho(x-\mu_X)(y-\mu_Y)}{\sigma_X\sigma_Y}\bigg]\bigg)$$`
+
+where `\(\mu_X\)`, `\(\mu_Y\)` are the means of `\(X\)` and `\(Y\)`, `\(\sigma^2_Y\)`, `\(\sigma^2_X\)` 
+are the variances, and `\(\rho\)` is the correlation between `\(X\)` and `\(Y\)`.
+
+&lt;img src="chapter_7_files/figure-html/unnamed-chunk-9-1.png" width="672" /&gt;
+
+
+
+---
+
+# Sums of Independent Normal RVs 
+
+Let `\(X_1, X_2, \ldots, X_n\)` be iid Normal random variables with `\(X_i \sim N(\mu_i, \sigma_i^2)\)`,
+`\(i=1,2,\ldots,n\)`. Let `\(a_1, a_2, \ldots, a_n\)` be arbitrary constants. Then 
+
+`$$\sum a_iX_i \sim N\bigg(\sum a_i\mu_i, \sum a_i^2\sigma_i^2\bigg)$$` 
+
+Special case: let `\(X_1, X_2, \ldots, X_n \sim iid \;  N(\mu, \sigma^2)\)`. Then sample mean
+
+`$$\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i \sim N(\mu, \sigma^2/n)$$`
+
+---
+
+#  Central Limit Theorem 
+
+Let `\(X_1, X_2, \ldots, X_n\)` be an IID sample from a distribution with mean `\(\mu\)`
+and variance `\(\sigma^2\)`. This is not necessarily a Normal distribution. Assume 
+that `\(\mu &lt; \infty\)` and `\(\sigma^2 &lt; \infty\)`. 
+
++ As `\(n \rightarrow \infty\)`, the (sampling) distribution of `\(\bar{X}\)` converges 
+  to the Normal distribution with mean `\(\mu\)` and variance `\(\sigma^2/n\)`, regardless
+  of the distribution from which the sample was drawn.
+  
++ If we have a “large enough” sample size, we can use a Normal distribution to 
+  approximate the sampling distribution of `\(\bar{X}\)`, regardless of the form of 
+  the population distribution.
+  
+	+ This facilitates mean-based statistical inference.
+	
+	+ Common rule of thumb for “large enough” is 30, although the required sample 
+	  size varies depending on the situation.
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

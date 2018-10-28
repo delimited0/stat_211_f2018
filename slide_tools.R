@@ -17,3 +17,13 @@ ns <- function(doc_type) {
     ""
   }
 }
+
+#' float barrier
+fb <- function(doc_type) {
+  if (doc_type == "html") {
+    ""
+  }
+  else{
+    "\\FloatBarrier"
+  }  
+}

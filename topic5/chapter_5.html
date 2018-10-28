@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Statistical Inference with Simulation</title>
+    <meta charset="utf-8">
+    <meta name="author" content="STAT 211 - 509" />
+    <meta name="date" content="2018-10-08" />
+    <link href="chapter_5_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="chapter_5_files/remark-css-0.0.1/tamu.css" rel="stylesheet" />
+    <link href="chapter_5_files/remark-css-0.0.1/tamu-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Statistical Inference with Simulation
+### STAT 211 - 509
+### 2018-10-08
+
+---
+
+
+
+
+#  Statistical Inference 
+
++ There is a population we wish to study. We take a sample of data, and we want
+  to use it learn about the population.
+
++ We model the observed sample data as outcomes of random variables that represent
+  the population. We want to know the parameters of these random variables, the 
+  population parameters.
+  
++ **Population**: the entire group of interest.
+
++ **Sample**: a part of the population selected to draw conclusions about the population.
+
+---
+
+## 3 problems in statistical inference:
+
++ **Point estimation** : single estimate of the parameter of interest
+	
+    + Maximum likelihood estimation
+	
++ **Confidence** **interval** : a range of “plausible” values for the parameter of interest, at a stated level of “confidence”
+	
++ **Hypothesis test** : a formal decision about the value of the parameter of interest, again at a stated level of “confidence”
+
+---
+
+## Sampling Distribution
+
++ We get model the data, `\(X_1, \ldots, X_n\)`, as independently following some distribution.
+  	
++ Compute a sample **statistic** to estimate the parameter of interest.
+	
+    + Mean: `\(\hat{\mu} = \frac{1}{n}\sum_{i=1}^n X_i\)`
+    + Standard deviation: `\(\hat{\sigma} = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (X_i - \hat{\mu})^2}\)`
+	    
++ In general, a statistic is a function `\(g(X_1, \ldots, X_n)\)`. This is a function 
+	  of random variables, so it too is a random variable.
+	
+	+ So the statistic has a distribution, called its **sampling distribution**
+
+---
+	
+## Three distributions
+
+&lt;img src="chapter_5_files/figure-html/unnamed-chunk-1-1.png" width="672" /&gt;
+
+---
+
+&lt;img src="chapter_5_files/figure-html/unnamed-chunk-2-1.png" width="672" /&gt;
+	
+---
+
+## Using the sampling distribution
+	
++ Confidence interval : use the sampling distribution to obtain an interval of statistic values with a specified probability, e.g. 0.95, of being observed.
+	
++ Hypothesis test : use the sampling distribution that would apply for a particular hypothesized parameter value to compute the probability of seeing data like those you saw; reject the hypothesized value if this probability, called a **p-value** , is sufficiently small, e.g. less than 0.05.
+
+---
+
+##  Computing / Approximating Sampling Distributions 
+
++ If we fully specify a probability model, we can often derive a sampling distribution exactly.
+
++ Other times, we can approximate it using asymptotic (limiting) results, which requires that we have a “large” sample size *n* .
+
++ Alternatively, if we can somehow *draw random samples from the sampling distribution*, we can use them to approximate the sampling distribution.
+
++ Recall how we have used R, e.g. via the ‘ rbinom ’ function, to simulate from a distribution, enabling us to approximate probabilities as simple proportions.
+
+---
+
+#  The Bootstrap 
+
++ The **bootstrap** involves sampling with replacement from the observed data:
+
+Repeat B times:
+
+ data_b = sample with replacement from data
+
+ statistic_b = value of statistic for ‘ data_b ’
+ 
++ Now you have B simulated values of the statistic, and you can use them to approximate the sampling distribution, enabling both confidence intervals and hypothesis tests.
+
+---
+
+#  Example: NFL 
+
+![](assets/img/image2.png)
+
+---
+
+# Confidence Intervals
+
++ A procedure for generating intervals such that if you repeated your experiment 
+  and constructed intervals many times, about `\(100(1-\alpha)\%\)` of them will cover 
+  the unknown parameter value.
+  
++ Any one confidence interval either contains the parameter with probability 1 or
+  otherwise it doesn't, contains with probability 0.
+  
++ `\(\alpha\)` is the confidence level. 
+
+---
+
+##  Confidence Intervals with the Bootstrap 
+
++ One way to construct an approximate `\(100(1-\alpha)\%\)` confidence interval for a 
+  parameter (e.g., `\(p\)` in the Binomial case) is to:
+	
+	+ Use the bootstrap to approximate the sampling distribution of `\(\hat{p}\)`.
+	
+	+ Obtain the `\(\alpha/2\)` and `\(1-\alpha/2\)` percentiles of the bootstrapped sampling distribution.
+	
+	+ For example, the interval from the 2.5th percentile to the 97.5th percentile of the bootstrapped      sampling distribution of is an approximate 95% confidence interval for `\(p\)`.
+
+---
+
+##  Interpretation of Confidence Intervals 
+
++ We expect of `\(100(1-\alpha)\%\)` of all such confidence intervals to contain the parameter being  
+  estimated.
+	
++ That means we expect `\(\alpha\%\)` of such intervals to *not* contain the parameter being estimated.
+	
++ Once we observe data and use it to compute an actual confidence interval:
+		
+    + We can say we obtained our interval by using a technique that can be expected to ‘cover’ the true parameter value with probability .
+		
+    + We cannot say whether our particular interval covers the true parameter value or not.
+
+---
+
+#  Example: NFL 
+
++ See “ nfl.r ” and ‘ch_5_1’ lecture video.
+
+---
+
+![](assets/img/image5.png)
+
+---
+
+#  Hypothesis Tests 
+
++ The **null hypothesis** ($H_o$) is what we choose to believe until shown sufficient evidence to 
+	the contrary.
+	
++ The **alternative hypothesis** ($H_a$) is what we will conclude if the null hypothesis is     
+	 rejected.
+
++ A **p-value** is the probability of seeing a statistic value like ours, or even more ‘extreme’, if    *the null hypothesis is true*.
+
++ To compute a p-value, we require the sampling distribution of our statistic 
+  when *the null hypothesis is true*.
+
++ Potential errors:
+	+ Type I: Reject `\(H_o\)` when it is true.
+	+ Type II: Fail to reject `\(H_o\)` when it is false.
+
+---
+
+##  Hypothesis Tests with the Bootstrap 
+
++ One way to compute a p-value based on a statistic `\(T\)`, for which we observe the
+  value `\(T_o\)` with our data:
+	
+	+ Transform the data to force the null hypothesis to be true.
+	
+	+ Use the bootstrap on the transformed data to approximate the sampling 
+	  distribution of `\(T\)` under the null hypothesis.
+	
+	+ Compute the proportion of simulated values of `\(T\)` that are ‘as or more extreme’ 
+	  relative to `\(T_o\)`.
+	
+	+ For example, in the Binomial case, ‘as or more extreme’ is as follows:
+		+ `\(H_o:\; p = p_o\)` vs. `\(H_a:\; p &gt; p_o\)`: ‘as or more extreme’ means `\(\ge T_o\)`.
+		+ `\(H_o:\; p = p_o\)` vs. `\(H_a:\; p &lt; p_o\)`: ‘as or more extreme’ means `\(\le T_o\)`.
+		+ `\(H_o:\; p = p_o\)` vs. `\(H_a:\; p \ne p_o\)`: : ‘as or more extreme’ means `\(\ge |T_o|\)` in absolute   
+		  value
+
+---
+
+##  Interpretation of Hypothesis Tests 
+
++ Based on our p-value and desired confidence level , we make a decision as follows:
+	+ If p-value `\(\le \alpha\)`, reject `\(H_o\)` in favor of `\(H_a\)`.
+	+ Otherwise, “fail to reject” `\(H_o\)`.
+
++ If `\(H_o\)` is true but we observe p-value `\(\le \alpha\)`, we reject `\(H_o\)`, 
+  committing a **Type I error**. 
+
++ If `\(H_a\)` is true but we observe p-value `\(&gt;\alpha\)`, we fail to 
+  reject `\(H_o\)`, committing a **Type II error**.
+
++ If `\(H_o\)` is true, we expect to commit a Type I error no more than `\(\alpha\%\)` of the time.
+
++ Once we observe data and use it to compute an actual p-value, making a decision based on whether it is :
+    + We can say we made our decision based on a technique that can be expected to commit a Type I 
+		  error no more than of `\(\alpha\%\)` of the time.
+    + We cannot say whether we have committed a Type I error in this instance.
+
+---
+
+![](assets/img/image9.png)
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
